@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Sign Up</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    /* Full-page background */
+    background-image:
+        linear-gradient(
+            rgba(0, 45, 90, 0.45),
+            rgba(0, 20, 50, 0.55)
+        ),
+        url("images.png");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+
+    padding:30px 15px;
+}
+
+.container{
+    width:450px;
+    max-width:100%;
+
+    background:rgba(255,255,255,0.95);
+
+    padding:0 30px 30px;
+
+    border-radius:12px;
+    overflow:hidden;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.35);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+}
+
+.container{
+    width:450px;
+    background:#fff;
+    padding:0 30px 30px;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+/* Header Image */
+.header-image{
+    width:calc(100% + 60px);
+    height:150px;
+    margin-left:-30px;
+    object-fit:cover;
+    display:block;
+}
+
+h2{
+    text-align:center;
+    color:#004080;
+    margin:25px 0 20px;
+}
+
+label{
+    display:block;
+    margin-top:10px;
+    margin-bottom:5px;
+    font-weight:bold;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:15px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:5px;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.create{
+    background:#0066cc;
+}
+
+.create:hover{
+    background:#004d99;
+}
+
+.login{
+    background:#28a745;
+}
+
+.login:hover{
+    background:#218838;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- Header Image -->
+<img src="ftclogo.png" alt="FTC Safety Locker Header" class="header-image">
+
+<h2>Create FTC Safety Locker</h2>
+
+<form id="signupForm">
+
+<label>Full Name</label>
+<input type="text" id="fullname" required>
+
+<label>Phone Number</label>
+<input type="tel" required>
+
+<label>Email Address</label>
+<input type="email" required>
+
+<label>Address</label>
+<textarea rows="3" required></textarea>
+
+<label>Date of Birth</label>
+<input type="date" required>
+
+<label>Type of Account</label>
+<select required>
+<option value="">Select Account Type</option>
+<option>SafeGuard Account</option>
+</select>
+
+<div class="buttons">
+
+<button type="submit" class="create">
+Create Account
+</button>
+
+<button type="button" class="login" onclick="window.location.href='login.html'">
+Login
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+<script>
+
+document.getElementById("signupForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+// Save details
+localStorage.setItem("fullName",
+document.getElementById("fullname").value);
+
+localStorage.setItem("accountNumber","0500 4800 2100");
+localStorage.setItem("username","locker1903");
+localStorage.setItem("password","Ftc@2026");
+
+// Redirect
+window.location.href="account.html";
+
+});
+</script>
+
+</body>
+</html>
