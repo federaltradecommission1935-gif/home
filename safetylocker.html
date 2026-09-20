@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bank Sign Up</title>
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>FTC Safety Locker - Create Account</title>
+
 
 <style>
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
     font-family:Arial, sans-serif;
 }
+
 
 body{
     min-height:100vh;
@@ -20,7 +28,6 @@ body{
     justify-content:center;
     align-items:center;
 
-    /* Full-page background */
     background-image:
         linear-gradient(
             rgba(0, 45, 90, 0.45),
@@ -35,6 +42,7 @@ body{
 
     padding:30px 15px;
 }
+
 
 .container{
     width:450px;
@@ -54,152 +62,607 @@ body{
     -webkit-backdrop-filter:blur(8px);
 }
 
-.container{
-    width:450px;
-    background:#fff;
-    padding:0 30px 30px;
-    border-radius:10px;
-    overflow:hidden;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
-}
 
 /* Header Image */
+
 .header-image{
     width:calc(100% + 60px);
     height:150px;
+
     margin-left:-30px;
+
     object-fit:cover;
+
     display:block;
 }
+
 
 h2{
     text-align:center;
+
     color:#004080;
+
     margin:25px 0 20px;
 }
 
+
 label{
     display:block;
+
     margin-top:10px;
     margin-bottom:5px;
+
     font-weight:bold;
 }
+
 
 input,
 textarea,
 select{
+
     width:100%;
+
     padding:10px;
+
     border:1px solid #ccc;
+
     border-radius:5px;
+
     font-size:15px;
 }
+
 
 textarea{
     resize:vertical;
 }
 
+
 .buttons{
+
     display:flex;
+
     gap:10px;
+
     margin-top:20px;
 }
 
+
 button{
+
     flex:1;
+
     padding:12px;
+
     border:none;
+
     border-radius:5px;
+
     color:white;
+
     font-size:16px;
+
     cursor:pointer;
 }
+
 
 .create{
     background:#0066cc;
 }
 
+
 .create:hover{
     background:#004d99;
 }
+
 
 .login{
     background:#28a745;
 }
 
+
 .login:hover{
     background:#218838;
 }
+
+
+#message{
+
+    margin-top:15px;
+
+    text-align:center;
+
+    font-weight:bold;
+
+    color:#004080;
+
+}
+
+
 </style>
 
 </head>
+
+
 <body>
+
 
 <div class="container">
 
+
 <!-- Header Image -->
-<img src="ftclogo.png" alt="FTC Safety Locker Header" class="header-image">
+
+<img
+    src="ftclogo.png"
+    alt="FTC Safety Locker Header"
+    class="header-image"
+>
+
 
 <h2>Create FTC Safety Locker</h2>
 
+
 <form id="signupForm">
 
+
 <label>Full Name</label>
-<input type="text" id="fullname" required>
+
+<input
+    type="text"
+    id="fullname"
+    required
+>
+
 
 <label>Phone Number</label>
-<input type="tel" required>
+
+<input
+    type="tel"
+    id="phone"
+    required
+>
+
 
 <label>Email Address</label>
-<input type="email" required>
+
+<input
+    type="email"
+    id="email"
+    required
+>
+
 
 <label>Address</label>
-<textarea rows="3" required></textarea>
+
+<textarea
+    id="address"
+    rows="3"
+    required
+></textarea>
+
 
 <label>Date of Birth</label>
-<input type="date" required>
+
+<input
+    type="date"
+    id="dob"
+    required
+>
+
 
 <label>Type of Account</label>
-<select required>
-<option value="">Select Account Type</option>
-<option>SafeGuard Account</option>
+
+<select
+    id="accountType"
+    required
+>
+
+<option value="">
+Select Account Type
+</option>
+
+<option value="SafeGuard Account">
+SafeGuard Account
+</option>
+
 </select>
+
 
 <div class="buttons">
 
-<button type="submit" class="create">
+
+<button
+    type="submit"
+    class="create"
+    id="createButton"
+>
 Create Account
 </button>
 
-<button type="button" class="login" onclick="window.location.href='login.html'">
+
+<button
+    type="button"
+    class="login"
+    onclick="window.location.href='login.html'"
+>
 Login
 </button>
 
+
 </div>
+
+
+<div id="message"></div>
+
 
 </form>
 
+
 </div>
+
+
+<!-- Supabase JavaScript library -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
-document.getElementById("signupForm").addEventListener("submit",function(e){
 
-e.preventDefault();
+/*
+==================================================
+SUPABASE CONNECTION
+==================================================
+*/
 
-// Save details
-localStorage.setItem("fullName",
-document.getElementById("fullname").value);
+const SUPABASE_URL =
+    "https://fwrxcovfsfnrvucoscab.supabase.co";
 
-localStorage.setItem("accountNumber","0500 4800 2100");
-localStorage.setItem("username","locker1903");
-localStorage.setItem("password","Ftc@2026");
 
-// Redirect
-window.location.href="account.html";
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8";
 
-});
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/*
+==================================================
+DEMO LOGIN SETTINGS
+==================================================
+*/
+
+const DEMO_PASSWORD = "Ftc@2026";
+
+
+/*
+==================================================
+GENERATE LOCKER USERNAME
+==================================================
+
+This creates:
+
+locker0001
+locker0002
+locker0003
+...
+
+This is only for your tutorial/demo.
+*/
+
+async function generateLockerUsername(){
+
+    const { count, error } =
+        await supabaseClient
+            .from("profiles")
+            .select("*", {
+                count: "exact",
+                head: true
+            });
+
+
+    if(error){
+
+        console.error(error);
+
+        throw new Error(
+            "Unable to generate locker username."
+        );
+
+    }
+
+
+    const nextNumber = (count || 0) + 1;
+
+
+    return "locker" +
+        String(nextNumber).padStart(4, "0");
+
+}
+
+
+/*
+==================================================
+CREATE ACCOUNT
+==================================================
+*/
+
+document
+    .getElementById("signupForm")
+    .addEventListener(
+        "submit",
+        async function(e){
+
+            e.preventDefault();
+
+
+            const message =
+                document.getElementById("message");
+
+
+            const button =
+                document.getElementById("createButton");
+
+
+            message.textContent =
+                "Creating your demo account...";
+
+
+            button.disabled = true;
+
+
+            try{
+
+
+                /*
+                ------------------------------------------
+                GET FORM VALUES
+                ------------------------------------------
+                */
+
+                const fullName =
+                    document
+                        .getElementById("fullname")
+                        .value
+                        .trim();
+
+
+                const phone =
+                    document
+                        .getElementById("phone")
+                        .value
+                        .trim();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim();
+
+
+                const address =
+                    document
+                        .getElementById("address")
+                        .value
+                        .trim();
+
+
+                const dob =
+                    document
+                        .getElementById("dob")
+                        .value;
+
+
+                const accountType =
+                    document
+                        .getElementById("accountType")
+                        .value;
+
+
+                /*
+                ------------------------------------------
+                GENERATE USERNAME
+                ------------------------------------------
+                */
+
+                const username =
+                    await generateLockerUsername();
+
+
+                /*
+                ------------------------------------------
+                CREATE SUPABASE AUTH USER
+                ------------------------------------------
+                */
+
+                const { data: authData, error: authError } =
+
+                    await supabaseClient.auth.signUp({
+
+                        email: email,
+
+                        password: DEMO_PASSWORD,
+
+                        options: {
+
+                            data: {
+
+                                username: username,
+
+                                full_name: fullName
+
+                            }
+
+                        }
+
+                    });
+
+
+                if(authError){
+
+                    throw authError;
+
+                }
+
+
+                if(!authData.user){
+
+                    throw new Error(
+                        "User account could not be created."
+                    );
+
+                }
+
+
+                /*
+                ------------------------------------------
+                GENERATE DEMO ACCOUNT NUMBER
+                ------------------------------------------
+                */
+
+                const randomPart1 =
+                    Math.floor(
+                        1000 + Math.random() * 9000
+                    );
+
+
+                const randomPart2 =
+                    Math.floor(
+                        1000 + Math.random() * 9000
+                    );
+
+
+                const accountNumber =
+                    "0500 " +
+                    randomPart1 +
+                    " " +
+                    randomPart2;
+
+
+                /*
+                ------------------------------------------
+                SAVE USER PROFILE
+                ------------------------------------------
+                */
+
+                const { error: profileError } =
+
+                    await supabaseClient
+                        .from("profiles")
+                        .insert({
+
+                            id: authData.user.id,
+
+                            full_name: fullName,
+
+                            phone: phone,
+
+                            address: address,
+
+                            date_of_birth: dob,
+
+                            account_type: accountType,
+
+                            account_number: accountNumber
+
+                        });
+
+
+                if(profileError){
+
+                    throw profileError;
+
+                }
+
+
+                /*
+                ------------------------------------------
+                SAVE DEMO USERNAME LOCALLY
+                ------------------------------------------
+
+                This is NOT the password.
+
+                It lets account.html know which
+                username was assigned.
+                */
+
+                localStorage.setItem(
+                    "lockerUsername",
+                    username
+                );
+
+
+                localStorage.setItem(
+                    "lockerAccountNumber",
+                    accountNumber
+                );
+
+
+                /*
+                ------------------------------------------
+                SUCCESS
+                ------------------------------------------
+                */
+
+                message.style.color = "#008000";
+
+                message.innerHTML =
+                    "Account created successfully!<br><br>" +
+
+                    "Username: <b>" +
+                    username +
+                    "</b><br>" +
+
+                    "Password: <b>" +
+                    DEMO_PASSWORD +
+                    "</b><br><br>" +
+
+                    "Opening your account...";
+
+
+                /*
+                Give the user a moment to see
+                the generated username.
+                */
+
+                setTimeout(function(){
+
+                    window.location.href =
+                        "account.html";
+
+                }, 2500);
+
+
+            }
+
+            catch(error){
+
+                console.error(error);
+
+
+                message.style.color = "#cc0000";
+
+
+                message.textContent =
+                    "Error: " +
+                    error.message;
+
+
+                button.disabled = false;
+
+            }
+
+        }
+    );
+
+
 </script>
 
+
 </body>
+
 </html>
