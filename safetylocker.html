@@ -554,22 +554,15 @@ document
                     await supabaseClient
                         .from("profiles")
                         .insert({
-
                             id: authData.user.id,
-
+                            username: username,
                             full_name: fullName,
-
                             phone: phone,
-
                             address: address,
-
                             date_of_birth: dob,
-
                             account_type: accountType,
-
                             account_number: accountNumber
-
-                        });
+});
 
 
                 if(profileError){
