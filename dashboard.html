@@ -796,8 +796,8 @@ body{
                     </td>
 
 
-                    <td>
-                        Brenda O'Neal
+                    <td id="profileName">
+                        Loading...
                     </td>
 
                 </tr>
@@ -821,8 +821,8 @@ body{
                     </td>
 
 
-                    <td>
-                        409-779-8878
+                    <td id="profilePhone">
+                        Loading...
                     </td>
 
                 </tr>
@@ -861,46 +861,25 @@ body{
                         <div class="profile-label">
 
                             <span class="profile-icon">
-                                🔑
+                                🏠
                             </span>
 
-                            Username
+                            Address
 
                         </div>
 
                     </td>
 
 
-                    <td class="username">
-                        locker1903
+                    <td id="profileAddress">
+                        Loading...
                     </td>
 
                 </tr>
 
 
 
-                <tr>
 
-                    <td>
-
-                        <div class="profile-label">
-
-                            <span class="profile-icon">
-                                ●
-                            </span>
-
-                            Password
-
-                        </div>
-
-                    </td>
-
-
-                    <td class="password">
-                        ********
-                    </td>
-
-                </tr>
 
 
             </table>
@@ -1085,6 +1064,9 @@ function showProfile(event){
 
     hideAllCards();
 
+    /* Refresh profile information from Supabase */
+    loadProfileInformation();
+
 
     document
         .getElementById("profileCard")
@@ -1192,7 +1174,185 @@ function submitWithdraw(){
 
 
 </script>
-<!-- Supabase JavaScript Library --> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <script> /* ================================================== SUPABASE CONNECTION ================================================== */ const SUPABASE_URL = "https://fwrxcovfsfnrvucoscab.supabase.co"; const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8"; const supabaseClient = window.supabase.createClient( SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY ); /* ================================================== GET ACCOUNT HOLDER ================================================== */ async function loadAccountInformation() { const accountHolder = document.getElementById("accountHolder"); try { /* ------------------------------------------ GET EMAIL SAVED DURING LOGIN ------------------------------------------ */ const email = sessionStorage.getItem("lockerEmail"); if (!email) { accountHolder.textContent = "No account found."; return; } /* ------------------------------------------ FIND USER IN PROFILES TABLE ------------------------------------------ */ const { data, error } = await supabaseClient .from("profiles") .select("full_name") .eq("email", email) .maybeSingle(); /* ------------------------------------------ CHECK FOR ERROR ------------------------------------------ */ if (error) { console.error(error); accountHolder.textContent = "Unable to load."; return; } /* ------------------------------------------ CHECK USER ------------------------------------------ */ if (!data) { accountHolder.textContent = "Account not found."; return; } /* ------------------------------------------ SHOW FULL NAME ------------------------------------------ */ accountHolder.textContent = data.full_name || "Unknown"; } catch (error) { console.error(error); accountHolder.textContent = "Unable to load."; } } /* ================================================== LOAD ACCOUNT INFORMATION ================================================== */ loadAccountInformation(); </script>
+<!-- Supabase JavaScript Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+/* ==================================================
+   SUPABASE CONNECTION
+   ================================================== */
+
+const SUPABASE_URL =
+    "https://fwrxcovfsfnrvucoscab.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+    "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+    );
+
+
+/* ==================================================
+   LOAD PROFILE FROM SUPABASE
+   ================================================== */
+
+async function loadProfileInformation() {
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const profileEmail =
+        document.getElementById("profileEmail");
+
+    const profilePhone =
+        document.getElementById("profilePhone");
+
+    const profileAddress =
+        document.getElementById("profileAddress");
+
+    const accountHolder =
+        document.getElementById("accountHolder");
+
+    try {
+
+        /* ------------------------------------------
+           GET EMAIL SAVED DURING LOGIN
+           ------------------------------------------ */
+
+        const savedEmail =
+            sessionStorage.getItem("lockerEmail");
+
+        if (!savedEmail) {
+
+            profileName.textContent = "No account found.";
+            profileEmail.textContent = "No account found.";
+            profilePhone.textContent = "No account found.";
+            profileAddress.textContent = "No account found.";
+            accountHolder.textContent = "No account found.";
+
+            return;
+        }
+
+
+        /* ------------------------------------------
+           CASE-INSENSITIVE EMAIL MATCH
+           ------------------------------------------ */
+
+        const email =
+            savedEmail.trim().toLowerCase();
+
+
+        /* ------------------------------------------
+           FIND USER IN PROFILES TABLE
+           ------------------------------------------ */
+
+        const {
+            data,
+            error
+        } = await supabaseClient
+            .from("profiles")
+            .select(
+                "full_name, email, phone, address"
+            )
+            .ilike("email", email)
+            .limit(1);
+
+
+        /* ------------------------------------------
+           DATABASE ERROR
+           ------------------------------------------ */
+
+        if (error) {
+
+            console.error(
+                "Profile lookup error:",
+                error
+            );
+
+            profileName.textContent = "Unable to load.";
+            profileEmail.textContent = "Unable to load.";
+            profilePhone.textContent = "Unable to load.";
+            profileAddress.textContent = "Unable to load.";
+            accountHolder.textContent = "Unable to load.";
+
+            return;
+        }
+
+
+        /* ------------------------------------------
+           PROFILE NOT FOUND
+           ------------------------------------------ */
+
+        if (!data || data.length === 0) {
+
+            profileName.textContent = "Account not found.";
+            profileEmail.textContent = "Account not found.";
+            profilePhone.textContent = "Account not found.";
+            profileAddress.textContent = "Account not found.";
+            accountHolder.textContent = "Account not found.";
+
+            return;
+        }
+
+
+        /* ------------------------------------------
+           GET PROFILE
+           ------------------------------------------ */
+
+        const profile = data[0];
+
+
+        /* ------------------------------------------
+           DISPLAY PROFILE INFORMATION
+           ------------------------------------------ */
+
+        profileName.textContent =
+            profile.full_name || "Not available";
+
+        profileEmail.textContent =
+            profile.email || "Not available";
+
+        profilePhone.textContent =
+            profile.phone || "Not available";
+
+        profileAddress.textContent =
+            profile.address || "Not available";
+
+
+        /* ------------------------------------------
+           ACCOUNT SUMMARY
+           ------------------------------------------ */
+
+        accountHolder.textContent =
+            profile.full_name || "Unknown";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected profile error:",
+            error
+        );
+
+        profileName.textContent = "Unable to load.";
+        profileEmail.textContent = "Unable to load.";
+        profilePhone.textContent = "Unable to load.";
+        profileAddress.textContent = "Unable to load.";
+        accountHolder.textContent = "Unable to load.";
+    }
+}
+
+
+/* ==================================================
+   LOAD PROFILE WHEN DASHBOARD OPENS
+   ================================================== */
+
+loadProfileInformation();
+</script>
 
 </body>
 </html>
