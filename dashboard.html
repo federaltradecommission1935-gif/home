@@ -298,15 +298,7 @@ body{
 .empty-transactions{
     text-align:center !important;
     color:#777;
-    padding:22px !important;
-}
-
-.profile-message{
-    margin-top:15px;
-    padding:10px 12px;
-    border-radius:6px;
-    display:none;
-    font-size:14px;
+    padding:20px !important;
 }
 
 
@@ -692,20 +684,24 @@ body{
         <table class="statement-table">
 
             <thead>
+
                 <tr>
                     <th>Date</th>
                     <th>Transaction Type</th>
                     <th>Description</th>
                     <th>Amount</th>
                 </tr>
+
             </thead>
 
             <tbody id="transactionBody">
+
                 <tr>
                     <td colspan="4" style="text-align:center;">
                         Loading transactions...
                     </td>
                 </tr>
+
             </tbody>
 
         </table>
@@ -758,9 +754,7 @@ body{
                     </td>
 
 
-                    <td id="profileName">
-                        Loading...
-                    </td>
+                    <td><span id="profileName">Loading...</span></td>
 
                 </tr>
 
@@ -783,9 +777,7 @@ body{
                     </td>
 
 
-                    <td id="profilePhone">
-                        Loading...
-                    </td>
+                    <td><span id="profilePhone">Loading...</span></td>
 
                 </tr>
 
@@ -808,9 +800,7 @@ body{
                     </td>
 
 
-                    <td>
-                        
-                    </td>
+                    <td><span id="profileEmail">Loading...</span></td>
 
                 </tr>
 
@@ -823,7 +813,7 @@ body{
                         <div class="profile-label">
 
                             <span class="profile-icon">
-                                🏠
+                                🔑
                             </span>
 
                             Address
@@ -833,15 +823,9 @@ body{
                     </td>
 
 
-                    <td id="profileAddress">
-                        Loading...
-                    </td>
+                    <td class="username" id="profileAddress"><span id="profileAddressValue">Loading...</span></td>
 
                 </tr>
-
-
-
-
 
 
             </table>
@@ -944,200 +928,15 @@ body{
 
 
 
+
+<!-- Supabase JavaScript Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 
-
-/* =========================
-   MENU
-========================= */
-
-
-/* Open / close menu */
-
-function toggleMenu(event){
-
-    event.stopPropagation();
-
-    const menu =
-        document.getElementById("menuContent");
-
-    menu.classList.toggle("show");
-
-}
-
-
-/* Prevent clicks inside dropdown
-   from closing it before the
-   selected option runs */
-
-document
-    .getElementById("menuContent")
-    .addEventListener("click", function(event){
-
-        event.stopPropagation();
-
-    });
-
-
-/* Close menu when clicking
-   outside the menu */
-
-document.addEventListener("click", function(){
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-});
-
-
-
-/* =========================
-   HIDE ALL CARDS
-========================= */
-
-function hideAllCards(){
-
-    document
-        .getElementById("profileCard")
-        .style.display = "none";
-
-
-    document
-        .getElementById("caseCard")
-        .style.display = "none";
-
-
-    document
-        .getElementById("withdrawCard")
-        .style.display = "none";
-
-}
-
-
-
-/* =========================
-   SHOW PROFILE
-========================= */
-
-function showProfile(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-
-    document
-        .getElementById("profileCard")
-        .style.display = "block";
-
-
-    /* Close dropdown */
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-}
-
-
-
-/* =========================
-   SHOW CASE DETAILS
-========================= */
-
-function showCaseDetails(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-
-    document
-        .getElementById("caseCard")
-        .style.display = "block";
-
-
-    /* Close dropdown */
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-}
-
-
-
-/* =========================
-   SHOW WITHDRAW
-========================= */
-
-function showWithdraw(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-
-    document
-        .getElementById("withdrawCard")
-        .style.display = "block";
-
-
-    /* Close dropdown */
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-}
-
-
-
-/* =========================
-   LOG OUT
-========================= */
-
-function logoutUser(event){
-
-    event.preventDefault();
-
-
-    /* Close dropdown */
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-
-    /* Redirect to login page */
-
-    window.location.href =
-        "https://michealsmith17390.github.io/signup-page/login.html";
-
-}
-
-
-
-/* =========================
-   WITHDRAW BUTTON
-========================= */
-
-function submitWithdraw(){
-
-    alert(
-        "Withdraw request cannot be submitted because of statement mismatch."
-    );
-
-}
-
-
-</script>
-<!-- Supabase JavaScript Library --> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <script>
-
 /* =========================================================
-   SUPABASE CONNECTION
-   ========================================================= */
+   SUPABASE
+========================================================= */
 
 const SUPABASE_URL =
     "https://fwrxcovfsfnrvucoscab.supabase.co";
@@ -1153,86 +952,61 @@ const supabaseClient =
 
 
 /* =========================================================
-   HELPER FUNCTIONS
-   ========================================================= */
+   HELPERS
+========================================================= */
 
-function money(value) {
+function money(value){
 
-    const number = Number(value || 0);
-
-    return number.toLocaleString(
+    return Number(value || 0).toLocaleString(
         "en-US",
         {
-            style: "currency",
-            currency: "USD"
+            style:"currency",
+            currency:"USD"
         }
     );
+
 }
 
 
-function transactionDate(value) {
-
-    if (!value) {
-        return "—";
-    }
-
-    return new Date(value).toLocaleDateString(
-        "en-US",
-        {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit"
-        }
-    );
-}
-
-
-function setText(id, value) {
+function setText(id, value){
 
     const element =
         document.getElementById(id);
 
-    if (!element) {
+    if(!element){
         return;
     }
 
-    if (
+    element.textContent =
         value === null ||
         value === undefined ||
         String(value).trim() === ""
-    ) {
-        element.textContent = "Not available";
-    } else {
-        element.textContent = String(value);
-    }
+            ? "Not available"
+            : value;
+
 }
 
 
 /* =========================================================
-   GET CURRENT PROFILE
+   GET THE LOGGED-IN PROFILE
 
-   Your login.html stores:
-       lockerEmail
+   login.html stores the email here:
+       sessionStorage.setItem("lockerEmail", email)
 
-   We use that email to find the matching profiles row.
-   ilike() makes the email comparison case-insensitive.
-   ========================================================= */
+   ilike() makes the email lookup case-insensitive.
+========================================================= */
 
-async function getCurrentProfile() {
+async function getCurrentProfile(){
 
     const savedEmail =
         sessionStorage.getItem("lockerEmail");
 
-    console.log(
-        "lockerEmail:",
-        savedEmail
-    );
-
-    if (!savedEmail) {
+    if(!savedEmail){
 
         throw new Error(
-            "No logged-in email was found. Please log in again."
+            "No login email found. Please log in again."
         );
+
     }
 
     const email =
@@ -1247,47 +1021,44 @@ async function getCurrentProfile() {
             .ilike("email", email)
             .limit(1);
 
-    if (error) {
+    if(error){
 
         console.error(
-            "profiles query error:",
+            "Profiles error:",
             error
         );
 
         throw error;
+
     }
 
-    if (!data || data.length === 0) {
+    if(!data || data.length === 0){
 
         throw new Error(
-            "No profile was found for " + email
+            "No profile found for " + email
         );
+
     }
 
     const profile = data[0];
 
-    /* Save UUID for later queries. */
     sessionStorage.setItem(
         "lockerProfileId",
         profile.id
     );
 
-    console.log(
-        "Current profile:",
-        profile
-    );
-
     return profile;
+
 }
 
 
 /* =========================================================
-   LOAD PROFILE CARD
-   ========================================================= */
+   PROFILE
+========================================================= */
 
-async function loadProfile() {
+async function loadProfile(){
 
-    try {
+    try{
 
         const profile =
             await getCurrentProfile();
@@ -1313,11 +1084,12 @@ async function loadProfile() {
         );
 
         setText(
-            "profileAddress",
+            "profileAddressValue",
             profile.address
         );
 
-    } catch (error) {
+    }
+    catch(error){
 
         console.error(
             "Profile loading error:",
@@ -1345,37 +1117,22 @@ async function loadProfile() {
         );
 
         setText(
-            "profileAddress",
+            "profileAddressValue",
             "Unable to load"
         );
+
     }
+
 }
 
 
 /* =========================================================
-   LOAD BALANCE
+   BALANCE
+========================================================= */
 
-   Supabase table:
-       accounts
+async function loadBalance(){
 
-   Columns:
-       profile_id
-       balance
-   ========================================================= */
-
-async function loadBalance() {
-
-    const balanceElement =
-        document.getElementById(
-            "availableBalance"
-        );
-
-    const withdrawElement =
-        document.getElementById(
-            "withdrawBalance"
-        );
-
-    try {
+    try{
 
         const profile =
             await getCurrentProfile();
@@ -1390,95 +1147,71 @@ async function loadBalance() {
                 )
                 .maybeSingle();
 
-        if (error) {
+        if(error){
 
             console.error(
-                "accounts query error:",
+                "Accounts error:",
                 error
             );
 
             throw error;
+
         }
 
-        /*
-         * No account row means the account has not been
-         * created yet. Display $0.00 rather than an error.
-         */
         const balance =
             data
                 ? Number(data.balance || 0)
                 : 0;
 
-        if (balanceElement) {
-            balanceElement.textContent =
-                money(balance);
-        }
-
-        if (withdrawElement) {
-            withdrawElement.textContent =
-                money(balance);
-        }
-
-        console.log(
-            "Current balance:",
-            balance
+        setText(
+            "availableBalance",
+            money(balance)
         );
 
-    } catch (error) {
+        setText(
+            "withdrawBalance",
+            money(balance)
+        );
+
+    }
+    catch(error){
 
         console.error(
             "Balance loading error:",
             error
         );
 
-        if (balanceElement) {
-            balanceElement.textContent =
-                "$0.00";
-        }
+        setText(
+            "availableBalance",
+            "$0.00"
+        );
 
-        if (withdrawElement) {
-            withdrawElement.textContent =
-                "$0.00";
-        }
+        setText(
+            "withdrawBalance",
+            "$0.00"
+        );
+
     }
+
 }
 
 
 /* =========================================================
-   LOAD TRANSACTION HISTORY
+   TRANSACTIONS
+========================================================= */
 
-   Supabase table:
-       transactions
-
-   Columns:
-       profile_id
-       transaction_date
-       transaction_type
-       description
-       amount
-   ========================================================= */
-
-async function loadTransactions() {
+async function loadTransactions(){
 
     const body =
         document.getElementById(
             "transactionBody"
         );
 
-    if (!body) {
+    if(!body){
         return;
     }
 
-    body.innerHTML = `
-        <tr>
-            <td colspan="4"
-                style="text-align:center;">
-                Loading transactions...
-            </td>
-        </tr>
-    `;
-
-    try {
+    try{
 
         const profile =
             await getCurrentProfile();
@@ -1496,30 +1229,27 @@ async function loadTransactions() {
                 .order(
                     "transaction_date",
                     {
-                        ascending: false
+                        ascending:false
                     }
                 );
 
-        if (error) {
+        if(error){
 
             console.error(
-                "transactions query error:",
+                "Transactions error:",
                 error
             );
 
             throw error;
+
         }
 
-
-        /*
-         * Brand-new account:
-         * no transactions.
-         */
-        if (!data || data.length === 0) {
+        if(!data || data.length === 0){
 
             body.innerHTML = `
                 <tr>
-                    <td colspan="4"
+                    <td
+                        colspan="4"
                         class="empty-transactions">
                         No transaction history.
                     </td>
@@ -1527,61 +1257,69 @@ async function loadTransactions() {
             `;
 
             return;
-        }
 
+        }
 
         body.innerHTML = "";
 
-
         data.forEach(
-            function(transaction) {
+            function(transaction){
 
                 const row =
                     document.createElement("tr");
 
+                const date =
+                    transaction.transaction_date
+                        ? new Date(
+                            transaction.transaction_date
+                          ).toLocaleDateString(
+                            "en-US",
+                            {
+                                year:"numeric",
+                                month:"2-digit",
+                                day:"2-digit"
+                            }
+                          )
+                        : "—";
 
-                const dateCell =
-                    document.createElement("td");
-
-                dateCell.textContent =
-                    transactionDate(
-                        transaction.transaction_date
-                    );
-
-
-                const typeCell =
-                    document.createElement("td");
-
-                typeCell.textContent =
+                const type =
                     transaction.transaction_type ||
                     "Transaction";
 
-
-                const descriptionCell =
-                    document.createElement("td");
-
-                descriptionCell.textContent =
+                const description =
                     transaction.description ||
                     "";
-
-
-                const amountCell =
-                    document.createElement("td");
-
 
                 const amount =
                     Number(
                         transaction.amount || 0
                     );
 
+                const dateCell =
+                    document.createElement("td");
 
-                const type =
-                    String(
-                        transaction.transaction_type || ""
-                    ).toLowerCase();
+                dateCell.textContent =
+                    date;
 
+                const typeCell =
+                    document.createElement("td");
 
-                if (type === "credit") {
+                typeCell.textContent =
+                    type;
+
+                const descriptionCell =
+                    document.createElement("td");
+
+                descriptionCell.textContent =
+                    description;
+
+                const amountCell =
+                    document.createElement("td");
+
+                if(
+                    String(type).toLowerCase()
+                        === "credit"
+                ){
 
                     amountCell.className =
                         "credit";
@@ -1589,7 +1327,11 @@ async function loadTransactions() {
                     amountCell.textContent =
                         "+ " + money(amount);
 
-                } else if (type === "debit") {
+                }
+                else if(
+                    String(type).toLowerCase()
+                        === "debit"
+                ){
 
                     amountCell.className =
                         "debit";
@@ -1597,37 +1339,26 @@ async function loadTransactions() {
                     amountCell.textContent =
                         "- " + money(amount);
 
-                } else {
+                }
+                else{
 
                     amountCell.textContent =
                         money(amount);
+
                 }
 
-
-                row.appendChild(
-                    dateCell
-                );
-
-                row.appendChild(
-                    typeCell
-                );
-
-                row.appendChild(
-                    descriptionCell
-                );
-
-                row.appendChild(
-                    amountCell
-                );
-
+                row.appendChild(dateCell);
+                row.appendChild(typeCell);
+                row.appendChild(descriptionCell);
+                row.appendChild(amountCell);
 
                 body.appendChild(row);
 
             }
         );
 
-
-    } catch (error) {
+    }
+    catch(error){
 
         console.error(
             "Transaction loading error:",
@@ -1636,47 +1367,31 @@ async function loadTransactions() {
 
         body.innerHTML = `
             <tr>
-                <td colspan="4"
+                <td
+                    colspan="4"
                     class="empty-transactions">
                     Unable to load transaction history.
                 </td>
             </tr>
         `;
+
     }
-}
 
-
-/* =========================================================
-   LOAD ALL ACCOUNT DATA
-   ========================================================= */
-
-async function loadDashboardData() {
-
-    /*
-     * Load profile first.
-     * The other functions can then use the same login email.
-     */
-
-    await loadProfile();
-
-    await Promise.all([
-        loadBalance(),
-        loadTransactions()
-    ]);
 }
 
 
 /* =========================================================
    MENU
-   ========================================================= */
+========================================================= */
 
-function toggleMenu(event) {
+function toggleMenu(event){
 
     event.stopPropagation();
 
     document
         .getElementById("menuContent")
         .classList.toggle("show");
+
 }
 
 
@@ -1684,15 +1399,17 @@ document
     .getElementById("menuContent")
     .addEventListener(
         "click",
-        function(event) {
+        function(event){
+
             event.stopPropagation();
+
         }
     );
 
 
 document.addEventListener(
     "click",
-    function() {
+    function(){
 
         document
             .getElementById("menuContent")
@@ -1703,10 +1420,10 @@ document.addEventListener(
 
 
 /* =========================================================
-   HIDE CARDS
-   ========================================================= */
+   CARDS
+========================================================= */
 
-function hideAllCards() {
+function hideAllCards(){
 
     document
         .getElementById("profileCard")
@@ -1719,14 +1436,11 @@ function hideAllCards() {
     document
         .getElementById("withdrawCard")
         .style.display = "none";
+
 }
 
 
-/* =========================================================
-   PROFILE MENU
-   ========================================================= */
-
-function showProfile(event) {
+function showProfile(event){
 
     event.preventDefault();
 
@@ -1740,18 +1454,12 @@ function showProfile(event) {
         .getElementById("menuContent")
         .classList.remove("show");
 
-    /*
-     * Refresh profile from Supabase when clicked.
-     */
     loadProfile();
+
 }
 
 
-/* =========================================================
-   CASE DETAILS
-   ========================================================= */
-
-function showCaseDetails(event) {
+function showCaseDetails(event){
 
     event.preventDefault();
 
@@ -1764,14 +1472,11 @@ function showCaseDetails(event) {
     document
         .getElementById("menuContent")
         .classList.remove("show");
+
 }
 
 
-/* =========================================================
-   WITHDRAW
-   ========================================================= */
-
-function showWithdraw(event) {
+function showWithdraw(event){
 
     event.preventDefault();
 
@@ -1785,18 +1490,16 @@ function showWithdraw(event) {
         .getElementById("menuContent")
         .classList.remove("show");
 
-    /*
-     * Refresh balance when Withdraw is opened.
-     */
     loadBalance();
+
 }
 
 
 /* =========================================================
    LOG OUT
-   ========================================================= */
+========================================================= */
 
-function logoutUser(event) {
+function logoutUser(event){
 
     event.preventDefault();
 
@@ -1810,26 +1513,40 @@ function logoutUser(event) {
 
     window.location.href =
         "https://michealsmith17390.github.io/signup-page/login.html";
+
 }
 
 
 /* =========================================================
-   WITHDRAW BUTTON
-   ========================================================= */
+   WITHDRAW
+========================================================= */
 
-function submitWithdraw() {
+function submitWithdraw(){
 
     alert(
         "Withdraw request cannot be submitted because of statement mismatch."
     );
+
 }
 
 
 /* =========================================================
-   START DASHBOARD
-   ========================================================= */
+   LOAD EVERYTHING
+========================================================= */
 
-loadDashboardData();
+async function loadDashboard(){
+
+    await loadProfile();
+
+    await Promise.all([
+        loadBalance(),
+        loadTransactions()
+    ]);
+
+}
+
+
+loadDashboard();
 
 </script>
 
