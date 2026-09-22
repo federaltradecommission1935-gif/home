@@ -796,8 +796,8 @@ body{
                     </td>
 
 
-                    <td id="profileName">
-                        Loading...
+                    <td>
+                        <span id="profileName">Loading...</span>
                     </td>
 
                 </tr>
@@ -821,8 +821,8 @@ body{
                     </td>
 
 
-                    <td id="profilePhone">
-                        Loading...
+                    <td>
+                        <span id="profilePhone">Loading...</span>
                     </td>
 
                 </tr>
@@ -846,40 +846,25 @@ body{
                     </td>
 
 
-                    <td>
-                        
-                    </td>
+                    <td><span id="profileEmail">Loading...</span></td>
 
                 </tr>
 
 
 
                 <tr>
-
                     <td>
-
                         <div class="profile-label">
-
-                            <span class="profile-icon">
-                                🏠
-                            </span>
-
+                            <span class="profile-icon">🏠</span>
                             Address
-
                         </div>
-
                     </td>
-
-
-                    <td id="profileAddress">
-                        Loading...
-                    </td>
-
+                    <td id="profileAddress">Loading...</td>
                 </tr>
 
 
 
-
+                
 
 
             </table>
@@ -1064,9 +1049,6 @@ function showProfile(event){
 
     hideAllCards();
 
-    /* Refresh profile information from Supabase */
-    loadProfileInformation();
-
 
     document
         .getElementById("profileCard")
@@ -1178,10 +1160,6 @@ function submitWithdraw(){
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-/* ==================================================
-   SUPABASE CONNECTION
-   ================================================== */
-
 const SUPABASE_URL =
     "https://fwrxcovfsfnrvucoscab.supabase.co";
 
@@ -1194,162 +1172,276 @@ const supabaseClient =
         SUPABASE_PUBLISHABLE_KEY
     );
 
+function setProfileValue(id, value) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.textContent =
+            value !== null &&
+            value !== undefined &&
+            String(value).trim() !== ""
+                ? String(value)
+                : "Not available";
+    }
+}
 
-/* ==================================================
-   LOAD PROFILE FROM SUPABASE
-   ================================================== */
+function showProfileStatus(message, isError = false) {
+    const status = document.getElementById("profileStatus");
+    if (!status) return;
+
+    status.style.display = "block";
+    status.style.padding = "10px 12px";
+    status.style.marginTop = "15px";
+    status.style.borderRadius = "6px";
+    status.style.background = isError ? "#fff0f0" : "#eef7ee";
+    status.style.color = isError ? "#b00020" : "#176b2c";
+    status.textContent = message;
+}
+
+function clearProfileStatus() {
+    const status = document.getElementById("profileStatus");
+    if (status) {
+        status.style.display = "none";
+        status.textContent = "";
+    }
+}
 
 async function loadProfileInformation() {
+    clearProfileStatus();
 
-    const profileName =
-        document.getElementById("profileName");
+    setProfileValue("profileName", "Loading...");
+    setProfileValue("profileEmail", "Loading...");
+    setProfileValue("profilePhone", "Loading...");
+    setProfileValue("profileAddress", "Loading...");
+    setProfileValue("accountHolder", "Loading...");
 
-    const profileEmail =
-        document.getElementById("profileEmail");
+    const profileId =
+        sessionStorage.getItem("lockerProfileId");
 
-    const profilePhone =
-        document.getElementById("profilePhone");
+    const savedEmail =
+        sessionStorage.getItem("lockerEmail");
 
-    const profileAddress =
-        document.getElementById("profileAddress");
+    console.log("Profile ID:", profileId);
+    console.log("Saved email:", savedEmail);
 
-    const accountHolder =
-        document.getElementById("accountHolder");
+    if (!profileId && !savedEmail) {
+        setProfileValue("profileName", "No logged-in account");
+        setProfileValue("profileEmail", "No logged-in account");
+        setProfileValue("profilePhone", "No logged-in account");
+        setProfileValue("profileAddress", "No logged-in account");
+        setProfileValue("accountHolder", "No logged-in account");
 
-    try {
-
-        /* ------------------------------------------
-           GET EMAIL SAVED DURING LOGIN
-           ------------------------------------------ */
-
-        const savedEmail =
-            sessionStorage.getItem("lockerEmail");
-
-        if (!savedEmail) {
-
-            profileName.textContent = "No account found.";
-            profileEmail.textContent = "No account found.";
-            profilePhone.textContent = "No account found.";
-            profileAddress.textContent = "No account found.";
-            accountHolder.textContent = "No account found.";
-
-            return;
-        }
-
-
-        /* ------------------------------------------
-           CASE-INSENSITIVE EMAIL MATCH
-           ------------------------------------------ */
-
-        const email =
-            savedEmail.trim().toLowerCase();
-
-
-        /* ------------------------------------------
-           FIND USER IN PROFILES TABLE
-           ------------------------------------------ */
-
-        const {
-            data,
-            error
-        } = await supabaseClient
-            .from("profiles")
-            .select(
-                "full_name, email, phone, address"
-            )
-            .ilike("email", email)
-            .limit(1);
-
-
-        /* ------------------------------------------
-           DATABASE ERROR
-           ------------------------------------------ */
-
-        if (error) {
-
-            console.error(
-                "Profile lookup error:",
-                error
-            );
-
-            profileName.textContent = "Unable to load.";
-            profileEmail.textContent = "Unable to load.";
-            profilePhone.textContent = "Unable to load.";
-            profileAddress.textContent = "Unable to load.";
-            accountHolder.textContent = "Unable to load.";
-
-            return;
-        }
-
-
-        /* ------------------------------------------
-           PROFILE NOT FOUND
-           ------------------------------------------ */
-
-        if (!data || data.length === 0) {
-
-            profileName.textContent = "Account not found.";
-            profileEmail.textContent = "Account not found.";
-            profilePhone.textContent = "Account not found.";
-            profileAddress.textContent = "Account not found.";
-            accountHolder.textContent = "Account not found.";
-
-            return;
-        }
-
-
-        /* ------------------------------------------
-           GET PROFILE
-           ------------------------------------------ */
-
-        const profile = data[0];
-
-
-        /* ------------------------------------------
-           DISPLAY PROFILE INFORMATION
-           ------------------------------------------ */
-
-        profileName.textContent =
-            profile.full_name || "Not available";
-
-        profileEmail.textContent =
-            profile.email || "Not available";
-
-        profilePhone.textContent =
-            profile.phone || "Not available";
-
-        profileAddress.textContent =
-            profile.address || "Not available";
-
-
-        /* ------------------------------------------
-           ACCOUNT SUMMARY
-           ------------------------------------------ */
-
-        accountHolder.textContent =
-            profile.full_name || "Unknown";
-
+        showProfileStatus(
+            "No login information found. Please log in again.",
+            true
+        );
+        return;
     }
 
-    catch (error) {
+    try {
+        let data = null;
+        let error = null;
 
-        console.error(
-            "Unexpected profile error:",
-            error
+        /* First use the exact profile UUID saved during login. */
+        if (profileId) {
+            const result = await supabaseClient
+                .from("profiles")
+                .select("id, full_name, email, phone, address")
+                .eq("id", profileId)
+                .maybeSingle();
+
+            data = result.data;
+            error = result.error;
+
+            console.log("Lookup by profile ID:", data, error);
+        }
+
+        /* Fallback for an older login session. */
+        if (!error && !data && savedEmail) {
+            const normalizedEmail =
+                savedEmail.trim().toLowerCase();
+
+            const result = await supabaseClient
+                .from("profiles")
+                .select("id, full_name, email, phone, address")
+                .ilike("email", normalizedEmail)
+                .limit(1);
+
+            error = result.error;
+            data =
+                result.data && result.data.length
+                    ? result.data[0]
+                    : null;
+
+            console.log("Lookup by email:", data, error);
+        }
+
+        if (error) {
+            console.error("Supabase error:", error);
+
+            setProfileValue("profileName", "Unable to load");
+            setProfileValue("profileEmail", "Unable to load");
+            setProfileValue("profilePhone", "Unable to load");
+            setProfileValue("profileAddress", "Unable to load");
+            setProfileValue("accountHolder", "Unable to load");
+
+            showProfileStatus(
+                "Supabase error: " + error.message,
+                true
+            );
+            return;
+        }
+
+        if (!data) {
+            setProfileValue("profileName", "Account not found");
+            setProfileValue(
+                "profileEmail",
+                savedEmail || "Account not found"
+            );
+            setProfileValue("profilePhone", "Account not found");
+            setProfileValue("profileAddress", "Account not found");
+            setProfileValue("accountHolder", "Account not found");
+
+            showProfileStatus(
+                "No matching record was found in profiles.",
+                true
+            );
+            return;
+        }
+
+        if (data.id) {
+            sessionStorage.setItem(
+                "lockerProfileId",
+                data.id
+            );
+        }
+
+        setProfileValue("profileName", data.full_name);
+        setProfileValue("profileEmail", data.email);
+        setProfileValue("profilePhone", data.phone);
+        setProfileValue("profileAddress", data.address);
+        setProfileValue("accountHolder", data.full_name);
+
+        console.log("Profile loaded:", data);
+
+    } catch (error) {
+        console.error("Unexpected error:", error);
+
+        setProfileValue("profileName", "Unable to load");
+        setProfileValue("profileEmail", "Unable to load");
+        setProfileValue("profilePhone", "Unable to load");
+        setProfileValue("profileAddress", "Unable to load");
+        setProfileValue("accountHolder", "Unable to load");
+
+        showProfileStatus(
+            "Unexpected error while loading profile.",
+            true
         );
-
-        profileName.textContent = "Unable to load.";
-        profileEmail.textContent = "Unable to load.";
-        profilePhone.textContent = "Unable to load.";
-        profileAddress.textContent = "Unable to load.";
-        accountHolder.textContent = "Unable to load.";
     }
 }
 
 
-/* ==================================================
-   LOAD PROFILE WHEN DASHBOARD OPENS
-   ================================================== */
+/* MENU */
+
+function toggleMenu(event) {
+    event.stopPropagation();
+
+    document
+        .getElementById("menuContent")
+        .classList.toggle("show");
+}
+
+document
+    .getElementById("menuContent")
+    .addEventListener("click", function(event) {
+        event.stopPropagation();
+    });
+
+document.addEventListener("click", function() {
+    document
+        .getElementById("menuContent")
+        .classList.remove("show");
+});
+
+
+/* HIDE ALL CARDS */
+
+function hideAllCards() {
+    document.getElementById("profileCard").style.display = "none";
+    document.getElementById("caseCard").style.display = "none";
+    document.getElementById("withdrawCard").style.display = "none";
+}
+
+
+/* PROFILE */
+
+function showProfile(event) {
+    event.preventDefault();
+
+    hideAllCards();
+
+    document.getElementById("profileCard").style.display = "block";
+
+    document
+        .getElementById("menuContent")
+        .classList.remove("show");
+
+    loadProfileInformation();
+}
+
+
+/* CASE DETAILS */
+
+function showCaseDetails(event) {
+    event.preventDefault();
+
+    hideAllCards();
+
+    document.getElementById("caseCard").style.display = "block";
+
+    document
+        .getElementById("menuContent")
+        .classList.remove("show");
+}
+
+
+/* WITHDRAW */
+
+function showWithdraw(event) {
+    event.preventDefault();
+
+    hideAllCards();
+
+    document.getElementById("withdrawCard").style.display = "block";
+
+    document
+        .getElementById("menuContent")
+        .classList.remove("show");
+}
+
+
+/* LOG OUT */
+
+function logoutUser(event) {
+    event.preventDefault();
+
+    sessionStorage.removeItem("lockerEmail");
+    sessionStorage.removeItem("lockerProfileId");
+
+    window.location.href =
+        "https://michealsmith17390.github.io/signup-page/login.html";
+}
+
+
+/* WITHDRAW BUTTON */
+
+function submitWithdraw() {
+    alert(
+        "Withdraw request cannot be submitted because of statement mismatch."
+    );
+}
+
+
+/* LOAD PROFILE */
 
 loadProfileInformation();
 </script>
