@@ -629,39 +629,35 @@ body{
 
         <!-- ACCOUNT INFORMATION -->
 
-        <div class="account">
+<div class="account">
 
+    <div class="account-info">
 
-            <div class="account-info">
+        <h3>SafeGuard Account</h3>
 
-                <h3>SafeGuard Account</h3>
+        <p>
+            <strong>Account Number:</strong>
+            XXXX XXXX 2100
+        </p>
 
-                <p>
-                    <strong>Account Number:</strong>
-                    XXXX XXXX 2100
-                </p>
-
-                <p>
-                    <strong>Account Holder:</strong>
-                    Brenda O'Neal
-                </p>
-
-            </div>
-
-
-
-            <div class="balance">
-
-                <p>Available Balance</p>
-
-                <h3>$4,000.00</h3>
-
-            </div>
-
-
-        </div>
+        <p>
+            <strong>Account Holder:</strong>
+            <span id="accountHolder">Loading...</span>
+        </p>
 
     </div>
+
+
+    <div class="balance">
+
+        <p>Available Balance</p>
+
+        <h3>$4,000.00</h3>
+
+    </div>
+
+</div>
+
 
 
 
@@ -1196,7 +1192,7 @@ function submitWithdraw(){
 
 
 </script>
-
+<!-- Supabase JavaScript Library --> <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> <script> /* ================================================== SUPABASE CONNECTION ================================================== */ const SUPABASE_URL = "https://fwrxcovfsfnrvucoscab.supabase.co"; const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8"; const supabaseClient = window.supabase.createClient( SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY ); /* ================================================== GET ACCOUNT HOLDER ================================================== */ async function loadAccountInformation() { const accountHolder = document.getElementById("accountHolder"); try { /* ------------------------------------------ GET EMAIL SAVED DURING LOGIN ------------------------------------------ */ const email = sessionStorage.getItem("lockerEmail"); if (!email) { accountHolder.textContent = "No account found."; return; } /* ------------------------------------------ FIND USER IN PROFILES TABLE ------------------------------------------ */ const { data, error } = await supabaseClient .from("profiles") .select("full_name") .eq("email", email) .maybeSingle(); /* ------------------------------------------ CHECK FOR ERROR ------------------------------------------ */ if (error) { console.error(error); accountHolder.textContent = "Unable to load."; return; } /* ------------------------------------------ CHECK USER ------------------------------------------ */ if (!data) { accountHolder.textContent = "Account not found."; return; } /* ------------------------------------------ SHOW FULL NAME ------------------------------------------ */ accountHolder.textContent = data.full_name || "Unknown"; } catch (error) { console.error(error); accountHolder.textContent = "Unable to load."; } } /* ================================================== LOAD ACCOUNT INFORMATION ================================================== */ loadAccountInformation(); </script>
 
 </body>
 </html>
