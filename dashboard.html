@@ -1,63 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Safety Locker Dashboard</title>
 
 <style>
-
-/* =========================
-   GENERAL
-========================= */
-
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 body{
     background:#f4f6f9;
     color:#222;
-   
 }
-
 
 /* =========================
    HEADER
 ========================= */
-
 .header{
     background:#004080;
     color:white;
-    height:90px;
+    min-height:90px;
     padding:10px 25px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     position:relative;
 }
 
 .header-logo{
     position:absolute;
     left:25px;
-
     width:65px;
     height:65px;
-
     object-fit:cover;
-
     border-radius:6px;
-
     background:white;
     padding:4px;
-
     box-shadow:0 2px 8px rgba(0,0,0,.25);
 }
 
@@ -75,53 +58,14 @@ body{
     opacity:.9;
 }
 
-
-/* Mobile */
-@media(max-width:600px){
-
-    .header{
-        height:80px;
-        padding:10px 15px;
-    }
-
-    .header-logo{
-        left:15px;
-        width:55px;
-        height:55px;
-    }
-
-    .header h1{
-        font-size:20px;
-        margin-left:55px;
-    }
-
-}
-
-.header h1{
-    font-size:28px;
-}
-
-.header p{
-    margin-top:5px;
-    font-size:13px;
-    opacity:.9;
-}
-
-
 /* =========================
-   MAIN CONTAINER
+   MAIN
 ========================= */
-
 .container{
     width:90%;
     max-width:900px;
     margin:30px auto;
 }
-
-
-/* =========================
-   ACCOUNT CARD
-========================= */
 
 .card{
     background:white;
@@ -141,11 +85,9 @@ body{
     color:#004080;
 }
 
-
 /* =========================
    ACCOUNT
 ========================= */
-
 .account{
     display:flex;
     justify-content:space-between;
@@ -177,11 +119,9 @@ body{
     font-size:28px;
 }
 
-
 /* =========================
    MENU
 ========================= */
-
 .menu{
     position:relative;
     display:inline-block;
@@ -201,29 +141,22 @@ body{
     background:#0059b3;
 }
 
-
-/* Dropdown hidden by default */
-
 .menu-content{
     display:none;
     position:absolute;
     right:0;
     top:45px;
     background:white;
-    min-width:190px;
+    min-width:200px;
     box-shadow:0 5px 15px rgba(0,0,0,.2);
     border-radius:8px;
     overflow:hidden;
-    z-index:100;
+    z-index:1000;
 }
-
-
-/* JavaScript adds .show */
 
 .menu-content.show{
     display:block;
 }
-
 
 .menu-content a{
     display:block;
@@ -238,31 +171,42 @@ body{
     color:#004080;
 }
 
-
-/* Logout hover */
-
 .menu-content a.logout:hover{
     color:#dc3545;
 }
 
-
 /* =========================
-   STATEMENT
+   COMMON CONTENT CARDS
 ========================= */
-
-.statement-card{
+.statement-card,
+.profile-card,
+.deposit-card,
+.info-card{
     background:white;
     margin-top:20px;
-    padding:25px;
     border-radius:10px;
     box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
-.statement-card h2{
+.profile-card,
+.deposit-card,
+.info-card{
+    display:none;
+}
+
+.statement-card{
+    padding:25px;
+}
+
+.statement-card h2,
+.info-card h2{
     color:#004080;
     margin-bottom:15px;
 }
 
+/* =========================
+   STATEMENT
+========================= */
 .statement-table{
     width:100%;
     border-collapse:collapse;
@@ -301,77 +245,84 @@ body{
     padding:20px !important;
 }
 
-
 /* =========================
-   PROFILE CARD
+   PROFILE
 ========================= */
-
-.profile-card{
-    display:none;
-    background:#fff;
-    margin-top:20px;
-    border-radius:12px;
-    box-shadow:0 5px 18px rgba(0,0,0,.10);
+.profile-card,
+.deposit-card{
     overflow:hidden;
 }
 
-.profile-header{
+.profile-header,
+.deposit-header{
     background:#004080;
     color:white;
     padding:20px 25px;
 }
 
-.profile-header h2{
+.profile-header h2,
+.deposit-header h2{
     margin:0;
     font-size:22px;
 }
 
-.profile-header p{
+.profile-header p,
+.deposit-header p{
     margin-top:5px;
     font-size:13px;
     opacity:.9;
 }
 
-.profile-body{
+.profile-body,
+.deposit-body{
     padding:20px 25px;
 }
 
-.profile-table{
+.profile-table,
+.deposit-table{
     width:100%;
     border-collapse:collapse;
 }
 
-.profile-table tr{
+.profile-table tr,
+.deposit-table tr{
     border-bottom:1px solid #e9ecef;
 }
 
-.profile-table tr:last-child{
+.profile-table tr:last-child,
+.deposit-table tr:last-child{
     border-bottom:none;
 }
 
-.profile-table td{
+.profile-table td,
+.deposit-table td{
     padding:16px 12px;
     vertical-align:middle;
 }
 
-.profile-table td:first-child{
+.profile-table td:first-child,
+.deposit-table td:first-child{
     width:35%;
     color:#666;
     font-weight:bold;
 }
 
-.profile-table td:last-child{
+.profile-table td:last-child,
+.deposit-table td:last-child{
     color:#222;
     font-weight:500;
+    word-break:break-word;
 }
 
-.profile-label{
+.profile-label,
+.deposit-label{
     display:flex;
     align-items:center;
     gap:10px;
 }
 
-.profile-icon{
+.profile-icon,
+.deposit-icon{
     width:30px;
     height:30px;
     display:flex;
@@ -388,111 +339,11 @@ body{
     font-weight:bold !important;
 }
 
-.password{
-    letter-spacing:3px;
-    color:#555 !important;
-}
-
-
 /* =========================
-   DEPOSIT DETAILS
+   INFO CARDS
 ========================= */
-
-.deposit-card{
-    display:none;
-    background:#fff;
-    margin-top:20px;
-    border-radius:12px;
-    box-shadow:0 5px 18px rgba(0,0,0,.10);
-    overflow:hidden;
-}
-
-.deposit-header{
-    background:#004080;
-    color:white;
-    padding:20px 25px;
-}
-
-.deposit-header h2{
-    margin:0;
-    font-size:22px;
-}
-
-.deposit-header p{
-    margin-top:5px;
-    font-size:13px;
-    opacity:.9;
-}
-
-.deposit-body{
-    padding:20px 25px;
-}
-
-.deposit-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-.deposit-table tr{
-    border-bottom:1px solid #e9ecef;
-}
-
-.deposit-table tr:last-child{
-    border-bottom:none;
-}
-
-.deposit-table td{
-    padding:16px 12px;
-    vertical-align:middle;
-}
-
-.deposit-table td:first-child{
-    width:35%;
-    color:#666;
-    font-weight:bold;
-}
-
-.deposit-table td:last-child{
-    color:#222;
-    font-weight:500;
-    word-break:break-word;
-}
-
-.deposit-label{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.deposit-icon{
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#eef5fc;
-    color:#004080;
-    border-radius:6px;
-    font-size:14px;
-}
-
-
-/* =========================
-   CASE / WITHDRAW CARDS
-========================= */
-
 .info-card{
-    display:none;
-    background:white;
-    margin-top:20px;
     padding:25px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.info-card h2{
-    color:#004080;
-    margin-bottom:15px;
 }
 
 .info-card p{
@@ -514,11 +365,9 @@ body{
     background:#0059b3;
 }
 
-
 /* =========================
    FOOTER
 ========================= */
-
 .footer{
     text-align:center;
     margin-top:30px;
@@ -527,15 +376,25 @@ body{
     font-size:13px;
 }
 
-
 /* =========================
    MOBILE
 ========================= */
-
 @media(max-width:600px){
 
+    .header{
+        min-height:80px;
+        padding:10px 15px;
+    }
+
+    .header-logo{
+        left:15px;
+        width:55px;
+        height:55px;
+    }
+
     .header h1{
-        font-size:22px;
+        font-size:20px;
+        margin-left:55px;
     }
 
     .container{
@@ -585,54 +444,39 @@ body{
         padding:8px;
     }
 
-    .profile-body{
-        padding:15px;
-    }
-
-    .profile-table td{
-        padding:13px 8px;
-        font-size:14px;
-    }
-
-    .profile-table td:first-child{
-        width:42%;
-    }
-
-    .profile-header{
-        padding:18px;
-    }
-
+    .profile-body,
     .deposit-body{
         padding:15px;
     }
 
+    .profile-table td,
     .deposit-table td{
         padding:13px 8px;
         font-size:14px;
     }
 
+    .profile-table td:first-child,
     .deposit-table td:first-child{
         width:42%;
     }
 
+    .profile-header,
     .deposit-header{
         padding:18px;
     }
 
+    .info-card{
+        padding:18px;
+    }
 }
-
 </style>
-
 </head>
 
-
 <body>
-
 
 <!-- =========================
      HEADER
 ========================= -->
-
 <div class="header">
 
     <img
@@ -642,104 +486,63 @@ body{
     >
 
     <div class="header-content">
-
         <h1>Safety Locker Dashboard</h1>
-
         <p>Secure Account Management</p>
-
     </div>
 
 </div>
 
 
-
 <div class="container">
-
 
     <!-- =========================
          ACCOUNT SUMMARY
     ========================= -->
-
     <div class="card">
 
         <div class="card-header">
 
             <h2>Account Summary</h2>
 
-
-            <!-- MENU -->
-
             <div class="menu">
 
                 <button
+                    type="button"
                     class="menu-btn"
-                    onclick="toggleMenu(event)">
+                    id="menuButton">
 
                     ☰ Menu
 
                 </button>
 
-
                 <div
                     class="menu-content"
                     id="menuContent">
 
-
-                    <!-- PROFILE -->
-
-                    <a
-                        href="#"
-                        onclick="showProfile(event)">
-
+                    <a href="#" data-action="profile">
                         Profile
-
                     </a>
 
-
-                    <!-- DEPOSIT DETAILS -->
-
-                    <a
-                        href="#"
-                        onclick="showDepositDetails(event)">
-
+                    <a href="#" data-action="deposit">
                         Deposit Details
-
                     </a>
 
-
-                    <!-- CASE DETAILS -->
-
-                    <a
-                        href="#"
-                        onclick="showCaseDetails(event)">
-
+                    <a href="#" data-action="case">
                         Case Details
-
                     </a>
 
-
-                    <!-- WITHDRAW -->
-
-                    <a
-                        href="#"
-                        onclick="showWithdraw(event)">
-
+                    <a href="#" data-action="withdraw">
                         Withdraw Request
-
                     </a>
-
-
-                    <!-- LOG OUT -->
 
                     <a
                         href="https://michealsmith17390.github.io/signup-page/login.html"
                         class="logout"
-                        onclick="logoutUser(event)">
+                        data-action="logout">
 
                         Log Out
 
                     </a>
-
 
                 </div>
 
@@ -748,61 +551,54 @@ body{
         </div>
 
 
-
         <!-- ACCOUNT INFORMATION -->
+        <div class="account">
 
-<div class="account">
+            <div class="account-info">
 
-    <div class="account-info">
+                <h3>SafeGuard Account</h3>
 
-        <h3>SafeGuard Account</h3>
+                <p>
+                    <strong>Account Number:</strong>
+                    0001 7548 2100
+                </p>
 
-        <p>
-            <strong>Account Number:</strong>
-            0001 7548 2100
-        </p>
+                <p>
+                    <strong>Account Holder:</strong>
+                    <span id="accountHolder">Loading...</span>
+                </p>
 
-        <p>
-            <strong>Account Holder:</strong>
-            <span id="accountHolder">Loading...</span>
-        </p>
+            </div>
+
+            <div class="balance">
+
+                <p>Available Balance</p>
+
+                <h3 id="availableBalance">$0.00</h3>
+
+            </div>
+
+        </div>
 
     </div>
-
-
-    <div class="balance">
-
-        <p>Available Balance</p>
-
-        <h3 id="availableBalance">$0.00</h3>
-
-    </div>
-
-</div>
-
-
 
 
     <!-- =========================
          ACCOUNT STATEMENT
     ========================= -->
-
     <div class="statement-card">
 
         <h2>Account Statement</h2>
 
-
         <table class="statement-table">
 
             <thead>
-
                 <tr>
                     <th>Date</th>
                     <th>Transaction Type</th>
                     <th>Description</th>
                     <th>Amount</th>
                 </tr>
-
             </thead>
 
             <tbody id="transactionBody">
@@ -820,124 +616,74 @@ body{
     </div>
 
 
-
     <!-- =========================
          PROFILE
     ========================= -->
-
-    <div
-        class="profile-card"
-        id="profileCard">
-
+    <div class="profile-card" id="profileCard">
 
         <div class="profile-header">
 
             <h2>Profile</h2>
 
-            <p>
-                Account holder information
-            </p>
+            <p>Account holder information</p>
 
         </div>
 
-
-
         <div class="profile-body">
-
 
             <table class="profile-table">
 
-
                 <tr>
-
                     <td>
-
                         <div class="profile-label">
-
-                            <span class="profile-icon">
-                                👤
-                            </span>
-
+                            <span class="profile-icon">👤</span>
                             Name
-
                         </div>
-
                     </td>
 
-
-                    <td><span id="profileName">Loading...</span></td>
-
+                    <td>
+                        <span id="profileName">Loading...</span>
+                    </td>
                 </tr>
 
-
-
                 <tr>
-
                     <td>
-
                         <div class="profile-label">
-
-                            <span class="profile-icon">
-                                ☎
-                            </span>
-
+                            <span class="profile-icon">☎</span>
                             Contact Number
-
                         </div>
-
                     </td>
 
-
-                    <td><span id="profilePhone">Loading...</span></td>
-
+                    <td>
+                        <span id="profilePhone">Loading...</span>
+                    </td>
                 </tr>
 
-
-
                 <tr>
-
                     <td>
-
                         <div class="profile-label">
-
-                            <span class="profile-icon">
-                                ✉
-                            </span>
-
+                            <span class="profile-icon">✉</span>
                             Email
-
                         </div>
-
                     </td>
-
-
-                    <td><span id="profileEmail">Loading...</span></td>
-
-                </tr>
-
-
-
-                <tr>
 
                     <td>
-
-                        <div class="profile-label">
-
-                            <span class="profile-icon">
-                                🔑
-                            </span>
-
-                            Address
-
-                        </div>
-
+                        <span id="profileEmail">Loading...</span>
                     </td>
-
-
-                    <td class="username" id="profileAddress"><span id="profileAddressValue">Loading...</span></td>
-
                 </tr>
 
+                <tr>
+                    <td>
+                        <div class="profile-label">
+                            <span class="profile-icon">📍</span>
+                            Address
+                        </div>
+                    </td>
+
+                    <td class="username">
+                        <span id="profileAddressValue">Loading...</span>
+                    </td>
+                </tr>
 
             </table>
 
@@ -946,22 +692,16 @@ body{
     </div>
 
 
-
     <!-- =========================
          DEPOSIT DETAILS
     ========================= -->
-
-    <div
-        class="deposit-card"
-        id="depositCard">
+    <div class="deposit-card" id="depositCard">
 
         <div class="deposit-header">
 
             <h2>Wire Details</h2>
 
-            <p>
-                Bank information for wire deposits
-            </p>
+            <p>Bank information for wire deposits</p>
 
         </div>
 
@@ -1035,103 +775,80 @@ body{
 
     </div>
 
+
     <!-- =========================
          CASE DETAILS
     ========================= -->
-
-    <div
-        class="info-card"
-        id="caseCard">
-
+    <div class="info-card" id="caseCard">
 
         <h2>Case Details</h2>
-
 
         <p>
             <strong>Case ID:</strong>
             1010-ftc-9857
         </p>
 
-
         <p>
             <strong>Officer Name:</strong>
             Mark J Lee
         </p>
-
 
         <p>
             <strong>Email:</strong>
             marklee_doj@usa.com
         </p>
 
-
         <p>
             <strong>Phone Number:</strong>
             820-200-7035
         </p>
 
-
     </div>
-
 
 
     <!-- =========================
          WITHDRAW REQUEST
     ========================= -->
-
-    <div
-        class="info-card"
-        id="withdrawCard">
-
+    <div class="info-card" id="withdrawCard">
 
         <h2>Withdraw Request</h2>
-
 
         <p>
             Submit a request to withdraw the available balance.
         </p>
-
 
         <p>
             <strong>Available Balance:</strong>
             <span id="withdrawBalance">$0.00</span>
         </p>
 
-
         <button
+            type="button"
             class="withdraw-btn"
-            onclick="submitWithdraw()">
+            id="withdrawButton">
 
             Submit Withdraw Request
 
         </button>
 
-
     </div>
 
-
 </div>
-
 
 
 <!-- =========================
      FOOTER
 ========================= -->
-
 <div class="footer">
-
-    © 2026 Safety Locker.
-    All Rights Reserved.
-
+    © 2026 Safety Locker. All Rights Reserved.
 </div>
-
-
 
 
 <!-- Supabase JavaScript Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+"use strict";
 
 /* =========================================================
    SUPABASE
@@ -1143,11 +860,56 @@ const SUPABASE_URL =
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8";
 
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_PUBLISHABLE_KEY
-    );
+let supabaseClient = null;
+
+
+/* =========================================================
+   INITIALIZE SUPABASE SAFELY
+
+   Important:
+   The dashboard menu does NOT depend on this succeeding.
+========================================================= */
+
+function initializeSupabase(){
+
+    try{
+
+        if(
+            window.supabase &&
+            typeof window.supabase.createClient === "function"
+        ){
+
+            supabaseClient =
+                window.supabase.createClient(
+                    SUPABASE_URL,
+                    SUPABASE_PUBLISHABLE_KEY
+                );
+
+            console.log("Supabase initialized.");
+
+            return true;
+
+        }
+
+        console.error(
+            "Supabase library did not load."
+        );
+
+        return false;
+
+    }
+    catch(error){
+
+        console.error(
+            "Supabase initialization error:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
 
 
 /* =========================================================
@@ -1167,7 +929,7 @@ function money(value){
 }
 
 
-function setText(id, value){
+function setText(id,value){
 
     const element =
         document.getElementById(id);
@@ -1187,15 +949,263 @@ function setText(id, value){
 
 
 /* =========================================================
-   GET THE LOGGED-IN PROFILE
+   MENU
+========================================================= */
 
-   login.html stores the email here:
-       sessionStorage.setItem("lockerEmail", email)
+const menuButton =
+    document.getElementById("menuButton");
 
-   ilike() makes the email lookup case-insensitive.
+const menuContent =
+    document.getElementById("menuContent");
+
+
+function openMenu(){
+
+    if(menuContent){
+
+        menuContent.classList.add("show");
+
+    }
+
+}
+
+
+function closeMenu(){
+
+    if(menuContent){
+
+        menuContent.classList.remove("show");
+
+    }
+
+}
+
+
+function toggleMenu(event){
+
+    if(event){
+
+        event.stopPropagation();
+
+    }
+
+    if(!menuContent){
+        return;
+    }
+
+    menuContent.classList.toggle("show");
+
+}
+
+
+if(menuButton){
+
+    menuButton.addEventListener(
+        "click",
+        toggleMenu
+    );
+
+}
+
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            menuContent &&
+            !menuContent.contains(event.target) &&
+            menuButton &&
+            !menuButton.contains(event.target)
+        ){
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CARD NAVIGATION
+========================================================= */
+
+function hideAllCards(){
+
+    const cardIds = [
+        "profileCard",
+        "depositCard",
+        "caseCard",
+        "withdrawCard"
+    ];
+
+    cardIds.forEach(
+        function(id){
+
+            const card =
+                document.getElementById(id);
+
+            if(card){
+
+                card.style.display = "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+function showProfile(){
+
+    hideAllCards();
+
+    const card =
+        document.getElementById("profileCard");
+
+    if(card){
+
+        card.style.display = "block";
+
+    }
+
+    closeMenu();
+
+    loadProfile();
+
+}
+
+
+function showDepositDetails(){
+
+    hideAllCards();
+
+    const card =
+        document.getElementById("depositCard");
+
+    if(card){
+
+        card.style.display = "block";
+
+    }
+
+    closeMenu();
+
+}
+
+
+function showCaseDetails(){
+
+    hideAllCards();
+
+    const card =
+        document.getElementById("caseCard");
+
+    if(card){
+
+        card.style.display = "block";
+
+    }
+
+    closeMenu();
+
+}
+
+
+function showWithdraw(){
+
+    hideAllCards();
+
+    const card =
+        document.getElementById("withdrawCard");
+
+    if(card){
+
+        card.style.display = "block";
+
+    }
+
+    closeMenu();
+
+    loadBalance();
+
+}
+
+
+/* =========================================================
+   MENU ACTIONS
+
+   Using addEventListener instead of inline onclick means
+   a JavaScript/Supabase error elsewhere cannot prevent
+   these handlers from being attached.
+========================================================= */
+
+if(menuContent){
+
+    menuContent.addEventListener(
+        "click",
+        function(event){
+
+            const link =
+                event.target.closest("a");
+
+            if(!link){
+                return;
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+
+            const action =
+                link.dataset.action;
+
+            if(action === "profile"){
+
+                showProfile();
+
+            }
+            else if(action === "deposit"){
+
+                showDepositDetails();
+
+            }
+            else if(action === "case"){
+
+                showCaseDetails();
+
+            }
+            else if(action === "withdraw"){
+
+                showWithdraw();
+
+            }
+            else if(action === "logout"){
+
+                logoutUser();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GET CURRENT PROFILE
 ========================================================= */
 
 async function getCurrentProfile(){
+
+    if(!supabaseClient){
+
+        throw new Error(
+            "Supabase is not initialized."
+        );
+
+    }
 
     const savedEmail =
         sessionStorage.getItem("lockerEmail");
@@ -1211,13 +1221,13 @@ async function getCurrentProfile(){
     const email =
         savedEmail.trim().toLowerCase();
 
-    const { data, error } =
+    const {data,error} =
         await supabaseClient
             .from("profiles")
             .select(
                 "id, full_name, email, phone, address"
             )
-            .ilike("email", email)
+            .ilike("email",email)
             .limit(1);
 
     if(error){
@@ -1239,7 +1249,8 @@ async function getCurrentProfile(){
 
     }
 
-    const profile = data[0];
+    const profile =
+        data[0];
 
     sessionStorage.setItem(
         "lockerProfileId",
@@ -1256,6 +1267,37 @@ async function getCurrentProfile(){
 ========================================================= */
 
 async function loadProfile(){
+
+    if(!supabaseClient){
+
+        setText(
+            "profileName",
+            "Unable to load"
+        );
+
+        setText(
+            "profileEmail",
+            "Unable to load"
+        );
+
+        setText(
+            "profilePhone",
+            "Unable to load"
+        );
+
+        setText(
+            "profileAddressValue",
+            "Unable to load"
+        );
+
+        setText(
+            "accountHolder",
+            "Unable to load"
+        );
+
+        return;
+
+    }
 
     try{
 
@@ -1331,12 +1373,28 @@ async function loadProfile(){
 
 async function loadBalance(){
 
+    if(!supabaseClient){
+
+        setText(
+            "availableBalance",
+            "$0.00"
+        );
+
+        setText(
+            "withdrawBalance",
+            "$0.00"
+        );
+
+        return;
+
+    }
+
     try{
 
         const profile =
             await getCurrentProfile();
 
-        const { data, error } =
+        const {data,error} =
             await supabaseClient
                 .from("accounts")
                 .select("balance")
@@ -1410,12 +1468,26 @@ async function loadTransactions(){
         return;
     }
 
+    if(!supabaseClient){
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty-transactions">
+                    Unable to connect to the database.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
     try{
 
         const profile =
             await getCurrentProfile();
 
-        const { data, error } =
+        const {data,error} =
             await supabaseClient
                 .from("transactions")
                 .select(
@@ -1515,10 +1587,10 @@ async function loadTransactions(){
                 const amountCell =
                     document.createElement("td");
 
-                if(
-                    String(type).toLowerCase()
-                        === "credit"
-                ){
+                const lowerType =
+                    String(type).toLowerCase();
+
+                if(lowerType === "credit"){
 
                     amountCell.className =
                         "credit";
@@ -1527,10 +1599,7 @@ async function loadTransactions(){
                         "+ " + money(amount);
 
                 }
-                else if(
-                    String(type).toLowerCase()
-                        === "debit"
-                ){
+                else if(lowerType === "debit"){
 
                     amountCell.className =
                         "debit";
@@ -1580,148 +1649,10 @@ async function loadTransactions(){
 
 
 /* =========================================================
-   MENU
-========================================================= */
-
-function toggleMenu(event){
-
-    event.stopPropagation();
-
-    document
-        .getElementById("menuContent")
-        .classList.toggle("show");
-
-}
-
-
-document
-    .getElementById("menuContent")
-    .addEventListener(
-        "click",
-        function(event){
-
-            event.stopPropagation();
-
-        }
-    );
-
-
-document.addEventListener(
-    "click",
-    function(){
-
-        document
-            .getElementById("menuContent")
-            .classList.remove("show");
-
-    }
-);
-
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-function hideAllCards(){
-
-    document
-        .getElementById("profileCard")
-        .style.display = "none";
-
-    document
-        .getElementById("depositCard")
-        .style.display = "none";
-
-    document
-        .getElementById("caseCard")
-        .style.display = "none";
-
-    document
-        .getElementById("withdrawCard")
-        .style.display = "none";
-
-}
-
-
-function showProfile(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-    document
-        .getElementById("profileCard")
-        .style.display = "block";
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-    loadProfile();
-
-}
-
-
-function showDepositDetails(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-    document
-        .getElementById("depositCard")
-        .style.display = "block";
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-}
-
-
-function showCaseDetails(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-    document
-        .getElementById("caseCard")
-        .style.display = "block";
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-}
-
-
-function showWithdraw(event){
-
-    event.preventDefault();
-
-    hideAllCards();
-
-    document
-        .getElementById("withdrawCard")
-        .style.display = "block";
-
-    document
-        .getElementById("menuContent")
-        .classList.remove("show");
-
-    loadBalance();
-
-}
-
-
-/* =========================================================
    LOG OUT
 ========================================================= */
 
-function logoutUser(event){
-
-    event.preventDefault();
+function logoutUser(){
 
     sessionStorage.removeItem(
         "lockerEmail"
@@ -1750,11 +1681,26 @@ function submitWithdraw(){
 }
 
 
+const withdrawButton =
+    document.getElementById("withdrawButton");
+
+if(withdrawButton){
+
+    withdrawButton.addEventListener(
+        "click",
+        submitWithdraw
+    );
+
+}
+
+
 /* =========================================================
-   LOAD EVERYTHING
+   LOAD DASHBOARD
 ========================================================= */
 
 async function loadDashboard(){
+
+    initializeSupabase();
 
     await loadProfile();
 
@@ -1765,6 +1711,10 @@ async function loadDashboard(){
 
 }
 
+
+/* =========================================================
+   START
+========================================================= */
 
 loadDashboard();
 
