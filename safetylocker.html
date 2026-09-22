@@ -63,8 +63,6 @@ body{
 }
 
 
-/* Header Image */
-
 .header-image{
     width:calc(100% + 60px);
     height:150px;
@@ -195,8 +193,6 @@ button:disabled{
 
 <div class="container">
 
-
-<!-- Header Image -->
 
 <img
     src="ftclogo.png"
@@ -430,6 +426,9 @@ document
                 ------------------------------------------
                 CREATE SUPABASE AUTH USER
                 ------------------------------------------
+
+                The email and password are stored
+                in Supabase Authentication.
                 */
 
                 const {
@@ -464,6 +463,9 @@ document
                 ------------------------------------------
                 SAVE USER PROFILE
                 ------------------------------------------
+
+                Email is also saved in the
+                profiles table.
                 */
 
                 const {
@@ -473,6 +475,8 @@ document
                     .insert({
 
                         id: authData.user.id,
+
+                        email: email,
 
                         full_name: fullName,
 
@@ -496,7 +500,7 @@ document
 
                 /*
                 ------------------------------------------
-                SUCCESS MESSAGE
+                SUCCESS
                 ------------------------------------------
                 */
 
@@ -505,14 +509,21 @@ document
                 message.innerHTML =
                     "Account created successfully!<br><br>" +
 
+                    "Login email: <b>" +
+                    email +
+                    "</b><br>" +
+
                     "Login password: <b>" +
                     DEMO_PASSWORD +
                     "</b>";
 
 
                 /*
-                Keep the form disabled after success.
+                Do not redirect.
+                Do not create username.
+                Do not create account number.
                 */
+
 
                 button.disabled = true;
 
