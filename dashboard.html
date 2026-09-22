@@ -395,6 +395,89 @@ body{
 
 
 /* =========================
+   DEPOSIT DETAILS
+========================= */
+
+.deposit-card{
+    display:none;
+    background:#fff;
+    margin-top:20px;
+    border-radius:12px;
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
+    overflow:hidden;
+}
+
+.deposit-header{
+    background:#004080;
+    color:white;
+    padding:20px 25px;
+}
+
+.deposit-header h2{
+    margin:0;
+    font-size:22px;
+}
+
+.deposit-header p{
+    margin-top:5px;
+    font-size:13px;
+    opacity:.9;
+}
+
+.deposit-body{
+    padding:20px 25px;
+}
+
+.deposit-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.deposit-table tr{
+    border-bottom:1px solid #e9ecef;
+}
+
+.deposit-table tr:last-child{
+    border-bottom:none;
+}
+
+.deposit-table td{
+    padding:16px 12px;
+    vertical-align:middle;
+}
+
+.deposit-table td:first-child{
+    width:35%;
+    color:#666;
+    font-weight:bold;
+}
+
+.deposit-table td:last-child{
+    color:#222;
+    font-weight:500;
+    word-break:break-word;
+}
+
+.deposit-label{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.deposit-icon{
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#eef5fc;
+    color:#004080;
+    border-radius:6px;
+    font-size:14px;
+}
+
+
+/* =========================
    CASE / WITHDRAW CARDS
 ========================= */
 
@@ -519,6 +602,23 @@ body{
         padding:18px;
     }
 
+    .deposit-body{
+        padding:15px;
+    }
+
+    .deposit-table td{
+        padding:13px 8px;
+        font-size:14px;
+    }
+
+    .deposit-table td:first-child{
+        width:42%;
+    }
+
+    .deposit-header{
+        padding:18px;
+    }
+
 }
 
 </style>
@@ -592,6 +692,17 @@ body{
                         onclick="showProfile(event)">
 
                         Profile
+
+                    </a>
+
+
+                    <!-- DEPOSIT DETAILS -->
+
+                    <a
+                        href="#"
+                        onclick="showDepositDetails(event)">
+
+                        Deposit Details
 
                     </a>
 
@@ -835,6 +946,95 @@ body{
     </div>
 
 
+
+    <!-- =========================
+         DEPOSIT DETAILS
+    ========================= -->
+<!--
+    <div
+        class="deposit-card"
+        id="depositCard">
+
+        <div class="deposit-header">
+
+            <h2>Wire Details</h2>
+
+            <p>
+                Bank information for wire deposits
+            </p>
+
+        </div>
+
+        <div class="deposit-body">
+
+            <table class="deposit-table">
+
+                <tr>
+                    <td>
+                        <div class="deposit-label">
+                            <span class="deposit-icon">👤</span>
+                            Name
+                        </div>
+                    </td>
+                    <td>robert</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="deposit-label">
+                            <span class="deposit-icon">📍</span>
+                            Address
+                        </div>
+                    </td>
+                    <td>755sfgdsgnv</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="deposit-label">
+                            <span class="deposit-icon">🏦</span>
+                            Bank Name
+                        </div>
+                    </td>
+                    <td>wells gargo</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="deposit-label">
+                            <span class="deposit-icon">🔢</span>
+                            Account Number
+                        </div>
+                    </td>
+                    <td>75396327456</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="deposit-label">
+                            <span class="deposit-icon">🔐</span>
+                            Routing Number
+                        </div>
+                    </td>
+                    <td>741852636</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="deposit-label">
+                            <span class="deposit-icon">🏢</span>
+                            Bank Address
+                        </div>
+                    </td>
+                    <td>785 yfhsdfah</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+-->
 
     <!-- =========================
          CASE DETAILS
@@ -1430,6 +1630,10 @@ function hideAllCards(){
         .style.display = "none";
 
     document
+        .getElementById("depositCard")
+        .style.display = "none";
+
+    document
         .getElementById("caseCard")
         .style.display = "none";
 
@@ -1455,6 +1659,23 @@ function showProfile(event){
         .classList.remove("show");
 
     loadProfile();
+
+}
+
+
+function showDepositDetails(event){
+
+    event.preventDefault();
+
+    hideAllCards();
+
+    document
+        .getElementById("depositCard")
+        .style.display = "block";
+
+    document
+        .getElementById("menuContent")
+        .classList.remove("show");
 
 }
 
