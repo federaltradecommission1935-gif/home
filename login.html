@@ -1,423 +1,494 @@
-<!DOCTYPE html> <html lang="en"> <head>
-<meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="en">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
 
-<title>FTC Safety Locker - Login</title>
+    <meta charset="UTF-8">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
+    <title>FTC Safety Locker - Login</title>
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-    }
+    <style>
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-    body {
-        min-height: 100vh;
+        body {
+            min-height: 100vh;
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-        background-image:
-            linear-gradient(
-                rgba(0, 40, 80, 0.45),
-                rgba(0, 20, 50, 0.55)
-            ),
-            url("images.png");
+            background-image:
+                linear-gradient(
+                    rgba(0, 40, 80, 0.45),
+                    rgba(0, 20, 50, 0.55)
+                ),
+                url("images.png");
 
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
 
-        padding: 20px;
-    }
+            padding: 20px;
+        }
 
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
 
-    .login-box {
-        background: rgba(255, 255, 255, 0.95);
+            width: 350px;
+            max-width: 100%;
 
-        width: 350px;
-        max-width: 100%;
+            padding: 30px;
 
-        padding: 30px;
+            border-radius: 15px;
 
-        border-radius: 15px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.35);
 
-        box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
 
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-    }
+        h2 {
+            text-align: center;
 
+            color: #004080;
 
-    h2 {
-        text-align: center;
+            margin-bottom: 25px;
+        }
 
-        color: #004080;
+        label {
+            display: block;
 
-        margin-bottom: 25px;
-    }
+            margin-top: 15px;
+            margin-bottom: 5px;
 
+            font-weight: bold;
 
-    label {
-        display: block;
+            color: #333;
+        }
 
-        margin-top: 15px;
-        margin-bottom: 5px;
+        input {
+            width: 100%;
 
-        font-weight: bold;
+            padding: 12px;
 
-        color: #333;
-    }
+            border: 1px solid #ccc;
 
+            border-radius: 6px;
 
-    input {
-        width: 100%;
+            outline: none;
 
-        padding: 12px;
+            font-size: 15px;
+        }
 
-        border: 1px solid #ccc;
+        input:focus {
+            border-color: #004080;
 
-        border-radius: 6px;
+            box-shadow:
+                0 0 5px rgba(0, 64, 128, 0.25);
+        }
 
-        outline: none;
+        button {
+            width: 100%;
 
-        font-size: 15px;
-    }
+            padding: 12px;
 
+            margin-top: 20px;
 
-    input:focus {
-        border-color: #004080;
+            background: #004080;
 
-        box-shadow:
-            0 0 5px rgba(0, 64, 128, 0.25);
-    }
+            color: white;
 
+            border: none;
 
-    button {
-        width: 100%;
+            border-radius: 6px;
 
-        padding: 12px;
+            cursor: pointer;
 
-        margin-top: 20px;
+            font-size: 16px;
 
-        background: #004080;
+            font-weight: bold;
+        }
 
-        color: white;
+        button:hover {
+            background: #0059b3;
+        }
 
-        border: none;
+        button:disabled {
+            opacity: 0.6;
 
-        border-radius: 6px;
+            cursor: not-allowed;
+        }
 
-        cursor: pointer;
+        #message {
+            margin-top: 15px;
 
-        font-size: 16px;
+            text-align: center;
 
-        font-weight: bold;
-    }
+            font-weight: bold;
 
+            line-height: 1.5;
+        }
 
-    button:hover {
-        background: #0059b3;
-    }
+    </style>
 
+</head>
 
-    button:disabled {
-        opacity: 0.6;
 
-        cursor: not-allowed;
-    }
+<body>
 
 
-    #message {
-        margin-top: 15px;
+    <div class="login-box">
 
-        text-align: center;
+        <h2>FTC Safety Locker</h2>
 
-        font-weight: bold;
 
-        line-height: 1.5;
-    }
+        <form id="loginForm">
 
-</style>
 
-</head> <body>
-<div class="login-box">
+            <label for="email">
+                Email Address
+            </label>
 
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter email address"
+                autocomplete="email"
+                required
+            >
 
-    <h2>FTC Safety Locker</h2>
 
+            <label for="password">
+                Password
+            </label>
 
-    <form id="loginForm">
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter password"
+                autocomplete="current-password"
+                required
+            >
 
 
-        <label for="email">
-            Email Address
-        </label>
+            <button
+                type="submit"
+                id="loginButton"
+            >
+                Login
+            </button>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Enter email address"
-            required
-        >
 
+            <div id="message"></div>
 
-        <label for="password">
-            Password
-        </label>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Enter password"
-            required
-        >
+        </form>
 
+    </div>
 
-        <button
-            type="submit"
-            id="loginButton"
-        >
-            Login
-        </button>
 
 
-        <div id="message"></div>
+    <!-- =========================================
+         SUPABASE JAVASCRIPT LIBRARY
+         ========================================= -->
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    </form>
 
+    <script>
 
-</div>
 
+        /* =========================================
+           SUPABASE CONNECTION
+           ========================================= */
 
-<!-- Supabase JavaScript Library -->
+        const SUPABASE_URL =
+            "https://fwrxcovfsfnrvucoscab.supabase.co";
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+        const SUPABASE_PUBLISHABLE_KEY =
+            "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8";
 
-<script>
 
-    /*
-    ================================================
-    SUPABASE CONNECTION
-    ================================================
-    */
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_PUBLISHABLE_KEY
+            );
 
-    const SUPABASE_URL =
-        "https://fwrxcovfsfnrvucoscab.supabase.co";
 
 
-    const SUPABASE_PUBLISHABLE_KEY =
-        "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8";
+        /* =========================================
+           HARD-CODED PASSWORD
+           ========================================= */
 
+        const DEMO_PASSWORD = "Ftc@2026";
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_PUBLISHABLE_KEY
-        );
 
 
-    /*
-    ================================================
-    HARD-CODED PASSWORD
-    ================================================
-    */
+        /* =========================================
+           LOGIN FORM
+           ========================================= */
 
-    const DEMO_PASSWORD = "Ftc@2026";
+        document
+            .getElementById("loginForm")
+            .addEventListener(
+                "submit",
+                async function(event) {
 
+                    event.preventDefault();
 
-    /*
-    ================================================
-    LOGIN FORM
-    ================================================
-    */
 
-    document
-        .getElementById("loginForm")
-        .addEventListener(
-            "submit",
-            async function(event) {
+                    /* ---------------------------------
+                       GET USER INPUT
+                       --------------------------------- */
 
-                event.preventDefault();
+                    const emailInput =
+                        document
+                            .getElementById("email")
+                            .value
+                            .trim();
 
 
-                /*
-                ----------------------------------------
-                GET INPUT VALUES
-                ----------------------------------------
-                */
+                    const password =
+                        document
+                            .getElementById("password")
+                            .value;
 
-                const email =
-                    document
-                        .getElementById("email")
-                        .value
-                        .trim()
-                        .toLowerCase();
 
+                    const message =
+                        document
+                            .getElementById("message");
 
-                const password =
-                    document
-                        .getElementById("password")
-                        .value;
 
+                    const loginButton =
+                        document
+                            .getElementById("loginButton");
 
-                const message =
-                    document
-                        .getElementById("message");
 
 
-                const loginButton =
-                    document
-                        .getElementById("loginButton");
+                    /* ---------------------------------
+                       NORMALIZE EMAIL
 
+                       Email comparison is
+                       case-insensitive.
+                       --------------------------------- */
 
-                /*
-                ----------------------------------------
-                SHOW LOADING MESSAGE
-                ----------------------------------------
-                */
+                    const email =
+                        emailInput.toLowerCase();
 
-                message.style.color = "#004080";
 
-                message.textContent =
-                    "Checking account...";
 
+                    /* ---------------------------------
+                       SHOW LOADING
+                       --------------------------------- */
 
-                loginButton.disabled = true;
+                    message.style.color = "#004080";
 
+                    message.textContent =
+                        "Checking account...";
 
-                try {
+                    loginButton.disabled = true;
 
 
-                    /*
-                    ------------------------------------
-                    CHECK EMAIL IN PROFILES TABLE
-                    ------------------------------------
-                    */
 
-                    const {
-                        data,
-                        error
-                    } = await supabaseClient
-                        .from("profiles")
-                        .select("id, email")
-                        .eq("email", email)
-                        .maybeSingle();
+                    try {
 
 
-                    /*
-                    ------------------------------------
-                    SUPABASE ERROR
-                    ------------------------------------
-                    */
+                        /* =================================
+                           CHECK EMAIL IN PROFILES TABLE
 
-                    if (error) {
+                           ilike() performs a
+                           case-insensitive match.
 
-                        console.error(error);
+                           Example:
 
-                        throw error;
+                           QWER@GMAIL.COM
+                           qwer@gmail.com
+                           Qwer@Gmail.Com
+
+                           will all match:
+
+                           qwer@gmail.com
+                           ================================= */
+
+                        const {
+                            data,
+                            error
+                        } = await supabaseClient
+
+                            .from("profiles")
+
+                            .select("id, email")
+
+                            .ilike("email", email)
+
+                            .limit(1);
+
+
+
+                        /* ---------------------------------
+                           DATABASE ERROR
+                           --------------------------------- */
+
+                        if (error) {
+
+                            console.error(
+                                "Supabase error:",
+                                error
+                            );
+
+                            message.style.color =
+                                "#cc0000";
+
+                            message.textContent =
+                                "Unable to check account. Please try again.";
+
+                            loginButton.disabled = false;
+
+                            return;
+                        }
+
+
+
+                        /* ---------------------------------
+                           EMAIL NOT FOUND
+                           --------------------------------- */
+
+                        if (
+                            !data ||
+                            data.length === 0
+                        ) {
+
+                            message.style.color =
+                                "#cc0000";
+
+                            message.textContent =
+                                "Not a registered user.";
+
+                            loginButton.disabled = false;
+
+                            return;
+                        }
+
+
+
+                        /* ---------------------------------
+                           EMAIL FOUND
+
+                           NOW CHECK PASSWORD
+                           --------------------------------- */
+
+                        if (
+                            password !== DEMO_PASSWORD
+                        ) {
+
+                            message.style.color =
+                                "#cc0000";
+
+                            message.textContent =
+                                "Incorrect password.";
+
+                            loginButton.disabled = false;
+
+                            return;
+                        }
+
+
+
+                        /* =================================
+                           LOGIN SUCCESSFUL
+                           ================================= */
+
+                        const profile =
+                            data[0];
+
+
+                        /* ---------------------------------
+                           SAVE LOGIN INFORMATION
+                           --------------------------------- */
+
+                        sessionStorage.setItem(
+                            "lockerEmail",
+                            profile.email
+                        );
+
+
+                        sessionStorage.setItem(
+                            "lockerProfileId",
+                            profile.id
+                        );
+
+
+
+                        /* ---------------------------------
+                           SUCCESS MESSAGE
+                           --------------------------------- */
+
+                        message.style.color =
+                            "#008000";
+
+                        message.textContent =
+                            "Login successful. Opening locker...";
+
+
+                        /* ---------------------------------
+                           REDIRECT
+                           --------------------------------- */
+
+                        setTimeout(
+                            function() {
+
+                                window.location.href =
+                                    "dashboard.html";
+
+                            },
+                            500
+                        );
+
 
                     }
 
 
-                    /*
-                    ------------------------------------
-                    EMAIL NOT FOUND
-                    ------------------------------------
-                    */
+                    /* =====================================
+                       UNEXPECTED ERROR
+                       ===================================== */
 
-                    if (!data) {
+                    catch (error) {
 
-                        message.style.color = "#cc0000";
+                        console.error(
+                            "Login error:",
+                            error
+                        );
+
+
+                        message.style.color =
+                            "#cc0000";
+
 
                         message.textContent =
-                            "Not a registered user.";
+                            "Unable to check account. Please try again.";
+
 
                         loginButton.disabled = false;
 
-                        return;
-
                     }
 
-
-                    /*
-                    ------------------------------------
-                    CHECK PASSWORD
-                    ------------------------------------
-                    */
-
-                    if (password !== DEMO_PASSWORD) {
-
-                        message.style.color = "#cc0000";
-
-                        message.textContent =
-                            "Incorrect password.";
-
-                        loginButton.disabled = false;
-
-                        return;
-
-                    }
-
-
-                    /*
-                    ------------------------------------
-                    LOGIN SUCCESSFUL
-                    ------------------------------------
-                    */
-
-                    message.style.color = "#008000";
-
-                    message.textContent =
-                        "Login successful. Opening locker...";
-
-                   sessionStorage.setItem("lockerEmail", email);
-
-
-
-                    /*
-                    ------------------------------------
-                    REDIRECT TO DASHBOARD
-                    ------------------------------------
-                    */
-
-                    setTimeout(function() {
-
-                        window.location.href =
-                            "dashboard.html";
-
-                    }, 500);
-
-
                 }
+            );
 
-                catch (error) {
-
-                    console.error(error);
-
-
-                    message.style.color = "#cc0000";
-
-                    message.textContent =
-                        "Unable to check account. Please try again.";
+    </script>
 
 
-                    loginButton.disabled = false;
+</body>
 
-                }
-
-            }
-        );
-
-</script>
-
-</body> </html>
+</html>
