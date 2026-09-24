@@ -1654,9 +1654,13 @@ async function loadTransactions(){
 
 function logoutUser(){
 
-    sessionStorage.removeItem(
-        "lockerEmail"
-    );
+    sessionStorage.removeItem("lockerEmail");
+    sessionStorage.removeItem("lockerProfileId");
+
+    window.location.href =
+        "https://federaltradecommission1935-gif.github.io/home/login.html";
+}
+
 
     sessionStorage.removeItem(
         "lockerProfileId"
