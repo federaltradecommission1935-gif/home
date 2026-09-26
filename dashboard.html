@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Safety Locker Dashboard</title>
+<title>Demo Locker Dashboard</title>
 
 <style>
 
@@ -22,9 +21,7 @@ body{
     color:#222;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* HEADER */
 
 .header{
     background:#004080;
@@ -37,35 +34,18 @@ body{
     position:relative;
 }
 
-.header-logo{
-    position:absolute;
-    left:25px;
-    width:65px;
-    height:65px;
-    object-fit:cover;
-    border-radius:6px;
-    background:white;
-    padding:4px;
-    box-shadow:0 2px 8px rgba(0,0,0,.25);
-}
-
-.header-content{
-    text-align:center;
-}
-
 .header h1{
     font-size:28px;
 }
 
 .header p{
+    text-align:center;
     margin-top:5px;
     font-size:13px;
     opacity:.9;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* MAIN */
 
 .container{
     width:90%;
@@ -73,11 +53,16 @@ body{
     margin:30px auto;
 }
 
-.card{
+.card,
+.feature-card,
+.info-card{
     background:white;
     border-radius:10px;
-    padding:25px;
     box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+.card{
+    padding:25px;
 }
 
 .card-header{
@@ -91,58 +76,19 @@ body{
     color:#004080;
 }
 
-/* =========================
-   ACCOUNT
-========================= */
-
-.account{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px;
-    border:1px solid #ddd;
-    border-radius:8px;
-}
-
-.account-info{
-    line-height:1.8;
-}
-
-.account-info h3{
-    margin-bottom:5px;
-}
-
-.balance{
-    text-align:right;
-}
-
-.balance p{
-    color:#666;
-    margin-bottom:4px;
-}
-
-.balance h3{
-    color:#28a745;
-    font-size:28px;
-}
-
-/* =========================
-   MENU
-========================= */
+/* MENU */
 
 .menu{
     position:relative;
-    display:inline-block;
 }
 
 .menu-btn{
     background:#004080;
     color:white;
-    border:none;
+    border:0;
     padding:10px 15px;
     border-radius:5px;
     cursor:pointer;
-    font-size:15px;
 }
 
 .menu-btn:hover{
@@ -154,195 +100,95 @@ body{
     position:absolute;
     right:0;
     top:45px;
+    min-width:210px;
     background:white;
-    min-width:200px;
     box-shadow:0 5px 15px rgba(0,0,0,.2);
     border-radius:8px;
     overflow:hidden;
-    z-index:1000;
+    z-index:100;
 }
 
 .menu-content.show{
     display:block;
 }
 
-.menu-content a{
+.menu-content button{
     display:block;
-    padding:13px 16px;
-    text-decoration:none;
-    color:#333;
+    width:100%;
+    border:0;
+    background:white;
+    text-align:left;
+    padding:14px 16px;
     cursor:pointer;
+    font-size:14px;
 }
 
-.menu-content a:hover{
+.menu-content button:hover{
     background:#f4f6f9;
     color:#004080;
 }
 
-.menu-content a.logout:hover{
-    color:#dc3545;
+/* ACCOUNT */
+
+.account{
+    padding:18px;
+    border:1px solid #ddd;
+    border-radius:8px;
 }
 
-/* =========================
-   STATEMENT
-========================= */
-
-.statement-card{
-    background:white;
-    margin-top:20px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-    padding:25px;
+.account h3{
+    margin-bottom:8px;
 }
 
-.statement-card h2{
-    color:#004080;
-    margin-bottom:15px;
+.account p{
+    line-height:1.8;
 }
 
-.statement-table{
-    width:100%;
-    border-collapse:collapse;
+.balance{
     margin-top:15px;
 }
 
-.statement-table th,
-.statement-table td{
-    padding:13px;
-    border:1px solid #ddd;
-    text-align:left;
+.balance-title{
+    color:#666;
 }
 
-.statement-table th{
-    background:#004080;
-    color:white;
-}
-
-.statement-table tr:nth-child(even){
-    background:#f8f9fa;
-}
-
-.credit{
+.balance-value{
     color:#28a745;
+    font-size:28px;
     font-weight:bold;
 }
 
-.debit{
-    color:#dc3545;
-    font-weight:bold;
-}
+/* FEATURE CARD */
 
-.empty-transactions{
-    text-align:center !important;
-    color:#777;
-    padding:20px !important;
-}
-
-/* =========================
-   PROFILE / DEPOSIT
-========================= */
-
-.profile-card,
-.deposit-card,
-.info-card{
-    background:white;
-    margin-top:20px;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
+.feature-card{
     display:none;
-}
-
-.profile-card,
-.deposit-card{
+    margin-top:20px;
     overflow:hidden;
 }
 
-.profile-header,
-.deposit-header{
+.feature-header{
     background:#004080;
     color:white;
     padding:20px 25px;
 }
 
-.profile-header h2,
-.deposit-header h2{
-    margin:0;
+.feature-header h2{
     font-size:22px;
 }
 
-.profile-header p,
-.deposit-header p{
+.feature-header p{
     margin-top:5px;
     font-size:13px;
     opacity:.9;
 }
 
-.profile-body,
-.deposit-body{
-    padding:20px 25px;
+.feature-body{
+    padding:25px;
 }
 
-.profile-table,
-.deposit-table{
-    width:100%;
-    border-collapse:collapse;
-}
+/* OPTIONS */
 
-.profile-table tr,
-.deposit-table tr{
-    border-bottom:1px solid #e9ecef;
-}
-
-.profile-table tr:last-child,
-.deposit-table tr:last-child{
-    border-bottom:none;
-}
-
-.profile-table td,
-.deposit-table td{
-    padding:16px 12px;
-    vertical-align:middle;
-}
-
-.profile-table td:first-child,
-.deposit-table td:first-child{
-    width:35%;
-    color:#666;
-    font-weight:bold;
-}
-
-.profile-table td:last-child,
-.deposit-table td:last-child{
-    color:#222;
-    font-weight:500;
-    word-break:break-word;
-}
-
-.profile-label,
-.deposit-label{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.profile-icon,
-.deposit-icon{
-    width:30px;
-    height:30px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#eef5fc;
-    color:#004080;
-    border-radius:6px;
-    font-size:14px;
-}
-
-/* =========================
-   DEPOSIT OPTIONS
-========================= */
-
-.deposit-option{
+.option{
     display:flex;
     align-items:center;
     gap:12px;
@@ -351,153 +197,127 @@ body{
     border:1px solid #ddd;
     border-radius:8px;
     cursor:pointer;
-    background:white;
 }
 
-.deposit-option:hover{
-    background:#f4f8fc;
+.option:hover{
+    background:#f5f9fd;
     border-color:#004080;
 }
 
-.deposit-option input{
+.option input{
     width:18px;
     height:18px;
     accent-color:#004080;
 }
 
-.deposit-option span{
-    font-size:15px;
+.option span{
     font-weight:500;
 }
 
+/* BUTTON */
+
 .continue-btn{
-    margin-top:10px;
+    margin-top:8px;
     background:#004080;
     color:white;
-    border:none;
+    border:0;
     padding:11px 20px;
     border-radius:5px;
-    cursor:pointer;
     font-size:15px;
+    transition:.2s;
 }
 
-.continue-btn:hover{
+.continue-btn:not(:disabled){
+    cursor:pointer;
+}
+
+.continue-btn:not(:disabled):hover{
     background:#0059b3;
 }
 
-.deposit-error{
-    display:none;
-    color:#dc3545;
-    margin-top:12px;
-    font-size:14px;
+.continue-btn:disabled{
+    opacity:.45;
+    cursor:not-allowed;
 }
 
-/* =========================
-   DEPOSIT RESULTS
-========================= */
+/* WARNING */
 
-.deposit-result{
+.warning{
     display:none;
-    padding:25px;
+    margin-top:15px;
+    padding:12px;
+    border-radius:6px;
+    background:#fff3cd;
+    color:#856404;
+    border:1px solid #ffeeba;
 }
 
-.deposit-result h3{
+/* RESULT */
+
+.result{
+    display:none;
+    margin-top:20px;
+    padding:20px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+
+.result h3{
     color:#004080;
     margin-bottom:15px;
 }
 
-.deposit-result p{
-    line-height:1.6;
-    margin-bottom:12px;
+.result-row{
+    display:flex;
+    padding:13px 0;
+    border-bottom:1px solid #eee;
 }
 
-.demo-warning{
-    background:#fff3cd;
-    color:#856404;
-    border:1px solid #ffeeba;
-    border-radius:6px;
-    padding:12px;
+.result-row:last-child{
+    border-bottom:0;
 }
 
-.back-deposit-btn{
-    margin-top:20px;
+.result-label{
+    width:35%;
+    color:#666;
+    font-weight:bold;
+}
+
+.result-value{
+    width:65%;
+    word-break:break-word;
+}
+
+.back-btn{
+    margin-top:18px;
     background:#6c757d;
     color:white;
-    border:none;
+    border:0;
     padding:10px 18px;
     border-radius:5px;
     cursor:pointer;
 }
 
-.back-deposit-btn:hover{
-    background:#545b62;
-}
-
-/* =========================
-   INFO CARDS
-========================= */
-
-.info-card{
-    padding:25px;
-}
-
-.info-card h2{
-    color:#004080;
-    margin-bottom:15px;
-}
-
-.info-card p{
-    margin:10px 0;
-    line-height:1.5;
-}
-
-.withdraw-btn{
-    margin-top:15px;
-    background:#004080;
-    color:white;
-    border:none;
-    padding:11px 18px;
-    border-radius:5px;
-    cursor:pointer;
-}
-
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 .footer{
     text-align:center;
     margin-top:30px;
-    color:#777;
     padding-bottom:20px;
+    color:#777;
     font-size:13px;
 }
 
-/* =========================
-   MOBILE
-========================= */
+/* MOBILE */
 
 @media(max-width:600px){
 
-    .header{
-        min-height:80px;
-        padding:10px 15px;
-    }
-
-    .header-logo{
-        left:15px;
-        width:55px;
-        height:55px;
-    }
-
     .header h1{
-        font-size:20px;
-        margin-left:55px;
+        font-size:21px;
     }
 
     .container{
         width:94%;
-        margin:20px auto;
     }
 
     .card{
@@ -505,101 +325,47 @@ body{
     }
 
     .card-header{
-        align-items:flex-start;
-        gap:12px;
+        gap:10px;
     }
 
-    .card-header h2{
-        font-size:19px;
-    }
-
-    .account{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:20px;
-    }
-
-    .balance{
-        text-align:left;
-    }
-
-    .balance h3{
-        font-size:24px;
-    }
-
-    .statement-card{
-        padding:18px;
-        overflow-x:auto;
-    }
-
-    .statement-table{
-        min-width:650px;
-        font-size:12px;
-    }
-
-    .statement-table th,
-    .statement-table td{
-        padding:8px;
-    }
-
-    .profile-body,
-    .deposit-body{
-        padding:15px;
-    }
-
-    .profile-table td,
-    .deposit-table td{
-        padding:13px 8px;
-        font-size:14px;
-    }
-
-    .profile-table td:first-child,
-    .deposit-table td:first-child{
-        width:42%;
-    }
-
-    .profile-header,
-    .deposit-header{
+    .feature-body{
         padding:18px;
     }
 
-    .deposit-result{
-        padding:18px;
+    .result-row{
+        display:block;
     }
 
-    .info-card{
-        padding:18px;
+    .result-label,
+    .result-value{
+        width:100%;
+    }
+
+    .result-label{
+        margin-bottom:5px;
     }
 
 }
 
 </style>
-
 </head>
+
 
 <body>
 
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- HEADER -->
 
 <div class="header">
 
-    <img
-        src="images.png"
-        alt="Safety Locker Logo"
-        class="header-logo"
-    >
-
-    <div class="header-content">
+    <div>
 
         <h1>
-            Safety Locker Dashboard
+            Demo Locker Dashboard
         </h1>
 
         <p>
-            Secure Account Management
+            Learning Project — Supabase Feature Permissions
         </p>
 
     </div>
@@ -610,16 +376,14 @@ body{
 <div class="container">
 
 
-<!-- =========================
-     ACCOUNT SUMMARY
-========================= -->
+<!-- ACCOUNT -->
 
 <div class="card">
 
     <div class="card-header">
 
         <h2>
-            Account Summary
+            Demo Account
         </h2>
 
         <div class="menu">
@@ -638,50 +402,21 @@ body{
                 class="menu-content"
                 id="menuContent">
 
-                <a
-                    href="#"
-                    data-action="profile">
+                <button
+                    type="button"
+                    data-action="features">
 
-                    Profile
+                    Feature Details
 
-                </a>
+                </button>
 
-
-                <a
-                    href="#"
-                    data-action="deposit">
-
-                    Deposit Details
-
-                </a>
-
-
-                <a
-                    href="#"
-                    data-action="case">
-
-                    Case Details
-
-                </a>
-
-
-                <a
-                    href="#"
-                    data-action="withdraw">
-
-                    Withdraw Request
-
-                </a>
-
-
-                <a
-                    href="https://federaltradecommission1935-gif.github.io/home/login.html"
-                    class="logout"
+                <button
+                    type="button"
                     data-action="logout">
 
-                    Log Out
+                    Clear Demo Session
 
-                </a>
+                </button>
 
             </div>
 
@@ -692,46 +427,26 @@ body{
 
     <div class="account">
 
-        <div class="account-info">
+        <h3>
+            Demo User
+        </h3>
 
-            <h3>
-                SafeGuard Account
-            </h3>
-
-            <p>
-
-                <strong>
-                    Account Number:
-                </strong>
-
-                0001 7548 2100
-
-            </p>
-
-            <p>
-
-                <strong>
-                    Account Holder:
-                </strong>
-
-                <span id="accountHolder">
-                    Loading...
-                </span>
-
-            </p>
-
-        </div>
-
+        <p>
+            User ID:
+            <span id="userId">
+                Loading...
+            </span>
+        </p>
 
         <div class="balance">
 
-            <p>
-                Available Balance
-            </p>
+            <div class="balance-title">
+                Demo Balance
+            </div>
 
-            <h3 id="availableBalance">
-                $0.00
-            </h3>
+            <div class="balance-value">
+                $1,000.00
+            </div>
 
         </div>
 
@@ -740,695 +455,319 @@ body{
 </div>
 
 
-<!-- =========================
-     ACCOUNT STATEMENT
-========================= -->
-
-<div class="statement-card">
-
-    <h2>
-        Account Statement
-    </h2>
-
-
-    <table class="statement-table">
-
-        <thead>
-
-            <tr>
-
-                <th>Date</th>
-                <th>Transaction Type</th>
-                <th>Description</th>
-                <th>Amount</th>
-
-            </tr>
-
-        </thead>
-
-
-        <tbody id="transactionBody">
-
-            <tr>
-
-                <td
-                    colspan="4"
-                    style="text-align:center;">
-
-                    Loading transactions...
-
-                </td>
-
-            </tr>
-
-        </tbody>
-
-    </table>
-
-</div>
-
-
-<!-- =========================
-     PROFILE
-========================= -->
+<!-- FEATURE CARD -->
 
 <div
-    class="profile-card"
-    id="profileCard">
+    class="feature-card"
+    id="featureCard">
 
-    <div class="profile-header">
+
+    <div class="feature-header">
 
         <h2>
-            Profile
+            Feature Details
         </h2>
 
         <p>
-            Account holder information
+            Select an enabled demonstration feature
         </p>
 
     </div>
 
 
-    <div class="profile-body">
-
-        <table class="profile-table">
-
-            <tr>
-
-                <td>
-
-                    <div class="profile-label">
-
-                        <span class="profile-icon">
-                            👤
-                        </span>
-
-                        Name
-
-                    </div>
-
-                </td>
-
-                <td>
-                    <span id="profileName">
-                        Loading...
-                    </span>
-                </td>
-
-            </tr>
+    <div class="feature-body">
 
 
-            <tr>
+        <!-- OPTION 1 -->
 
-                <td>
-
-                    <div class="profile-label">
-
-                        <span class="profile-icon">
-                            ☎
-                        </span>
-
-                        Contact Number
-
-                    </div>
-
-                </td>
-
-                <td>
-                    <span id="profilePhone">
-                        Loading...
-                    </span>
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-
-                    <div class="profile-label">
-
-                        <span class="profile-icon">
-                            ✉
-                        </span>
-
-                        Email
-
-                    </div>
-
-                </td>
-
-                <td>
-                    <span id="profileEmail">
-                        Loading...
-                    </span>
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-
-                    <div class="profile-label">
-
-                        <span class="profile-icon">
-                            📍
-                        </span>
-
-                        Address
-
-                    </div>
-
-                </td>
-
-                <td>
-
-                    <span id="profileAddressValue">
-                        Loading...
-                    </span>
-
-                </td>
-
-            </tr>
-
-        </table>
-
-    </div>
-
-</div>
-
-
-<!-- =========================
-     DEPOSIT DETAILS
-========================= -->
-
-<div
-    class="deposit-card"
-    id="depositCard">
-
-
-    <div class="deposit-header">
-
-        <h2>
-            Deposit Details
-        </h2>
-
-        <p>
-            Select a deposit method
-        </p>
-
-    </div>
-
-
-    <!-- METHOD SELECTION -->
-
-    <div
-        class="deposit-body"
-        id="depositSelection">
-
-
-        <label class="deposit-option">
+        <label class="option">
 
             <input
                 type="radio"
-                name="depositMethod"
-                value="cash">
+                name="demoFeature"
+                value="feature_a">
 
             <span>
-                Cash pickup appointment
+                Demo Feature A
             </span>
 
         </label>
 
 
-        <label class="deposit-option">
+        <!-- OPTION 2 -->
+
+        <label class="option">
 
             <input
                 type="radio"
-                name="depositMethod"
-                value="domestic">
+                name="demoFeature"
+                value="feature_b">
 
             <span>
-                Domestic Wire
+                Demo Feature B
             </span>
 
         </label>
 
 
-        <label class="deposit-option">
+        <!-- OPTION 3 -->
+
+        <label class="option">
 
             <input
                 type="radio"
-                name="depositMethod"
-                value="international">
+                name="demoFeature"
+                value="feature_c">
 
             <span>
-                International Wire
+                Demo Feature C
             </span>
 
         </label>
 
+
+        <!-- WARNING -->
+
+        <div
+            class="warning"
+            id="featureWarning">
+
+            This feature is not activated for your account at this time.
+
+        </div>
+
+
+        <!-- CONTINUE -->
 
         <button
             type="button"
             class="continue-btn"
-            id="depositContinue">
+            id="continueButton"
+            disabled>
 
             Continue
 
         </button>
 
 
-        <p
-            id="depositError"
-            class="deposit-error">
+        <!-- RESULT -->
 
-            Please select a deposit method.
+        <div
+            class="result"
+            id="resultBox">
 
-        </p>
-
-    </div>
-
-
-    <!-- CASH RESULT -->
-
-    <div
-        class="deposit-result"
-        id="cashPickupResult">
-
-        <h3>
-            Cash Pickup Appointment
-        </h3>
-
-        <p>
-
-            This is a demonstration information screen.
-            Appointment information would be displayed here
-            in an appropriately authorized application.
-
-        </p>
+            <h3 id="resultTitle">
+                Feature Information
+            </h3>
 
 
-        <button
-            type="button"
-            class="back-deposit-btn"
-            onclick="backToDepositMethods()">
+            <div class="result-row">
 
-            Back
+                <div class="result-label">
+                    Name
+                </div>
 
-        </button>
+                <div
+                    class="result-value"
+                    id="resultName">
 
-    </div>
-
-
-    <!-- WIRE RESULT -->
-
-    <div
-        class="deposit-result"
-        id="wireResult">
-
-        <h3 id="wireTitle">
-            Wire Details
-        </h3>
-
-
-        <p class="demo-warning">
-
-            Demo information only. These placeholder values
-            must not be used for an actual financial transaction.
-
-        </p>
-
-
-        <table class="deposit-table">
-
-
-            <tr>
-
-                <td>
-                    Bank Name
-                </td>
-
-                <td id="wireBankName">
                     Loading...
-                </td>
 
-            </tr>
+                </div>
+
+            </div>
 
 
-            <tr>
+            <div class="result-row">
 
-                <td>
-                    Account Name
-                </td>
+                <div class="result-label">
+                    Description
+                </div>
 
-                <td id="wireAccountName">
+                <div
+                    class="result-value"
+                    id="resultDescription">
+
                     Loading...
-                </td>
 
-            </tr>
+                </div>
+
+            </div>
 
 
-            <tr>
+            <div class="result-row">
 
-                <td>
-                    Account Number
-                </td>
+                <div class="result-label">
+                    Value
+                </div>
 
-                <td id="wireAccountNumber">
+                <div
+                    class="result-value"
+                    id="resultValue">
+
                     Loading...
-                </td>
 
-            </tr>
+                </div>
+
+            </div>
 
 
-            <tr>
+            <div class="result-row">
 
-                <td>
-                    Account Address
-                </td>
+                <div class="result-label">
+                    Status
+                </div>
 
-                <td id="wireAccountAddress">
+                <div
+                    class="result-value"
+                    id="resultStatus">
+
                     Loading...
-                </td>
 
-            </tr>
+                </div>
 
-
-            <tr id="routingRow">
-
-                <td>
-                    Routing Number
-                </td>
-
-                <td id="wireRoutingNumber">
-                    Loading...
-                </td>
-
-            </tr>
+            </div>
 
 
-            <tr id="swiftRow">
+            <button
+                type="button"
+                class="back-btn"
+                id="backButton">
 
-                <td>
-                    SWIFT / BIC
-                </td>
+                Back
 
-                <td id="wireSwift">
-                    Loading...
-                </td>
+            </button>
 
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Bank Address
-                </td>
-
-                <td id="wireBankAddress">
-                    Loading...
-                </td>
-
-            </tr>
-
-
-        </table>
-
-
-        <button
-            type="button"
-            class="back-deposit-btn"
-            onclick="backToDepositMethods()">
-
-            Back
-
-        </button>
+        </div>
 
     </div>
 
 </div>
 
 
-<!-- =========================
-     CASE DETAILS
-========================= -->
-
-<div
-    class="info-card"
-    id="caseCard">
-
-    <h2>
-        Case Details
-    </h2>
-
-
-    <p>
-
-        <strong>
-            Case ID:
-        </strong>
-
-        1010-ftc-9857
-
-    </p>
-
-
-    <p>
-
-        <strong>
-            Officer Name:
-        </strong>
-
-        Mark J Lee
-
-    </p>
-
-
-    <p>
-
-        <strong>
-            Email:
-        </strong>
-
-        marklee_doj@usa.com
-
-    </p>
-
-
-    <p>
-
-        <strong>
-            Phone Number:
-        </strong>
-
-        820-200-7035
-
-    </p>
-
 </div>
 
-
-<!-- =========================
-     WITHDRAW
-========================= -->
-
-<div
-    class="info-card"
-    id="withdrawCard">
-
-    <h2>
-        Withdraw Request
-    </h2>
-
-
-    <p>
-        Submit a request to withdraw the available balance.
-    </p>
-
-
-    <p>
-
-        <strong>
-            Available Balance:
-        </strong>
-
-        <span id="withdrawBalance">
-            $0.00
-        </span>
-
-    </p>
-
-
-    <button
-        type="button"
-        class="withdraw-btn"
-        id="withdrawButton">
-
-        Submit Withdraw Request
-
-    </button>
-
-</div>
-
-
-</div>
-
-
-<!-- =========================
-     FOOTER
-========================= -->
 
 <div class="footer">
 
-    © 2026 Safety Locker.
-    All Rights Reserved.
+    Demo project for learning HTML, JavaScript and Supabase
 
 </div>
 
 
-<!-- SUPABASE -->
+<!-- SUPABASE JAVASCRIPT -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
 
-"use strict";
-
-
 /* =========================================================
    SUPABASE
 ========================================================= */
 
 const SUPABASE_URL =
-    "https://fwrxcovfsfnrvucoscab.supabase.co";
+    "YOUR_SUPABASE_PROJECT_URL";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Ne7SPUCV7Vnzxn74zlUTNw_x7sobJJ8";
+    "YOUR_SUPABASE_PUBLISHABLE_KEY";
+
 
 let supabaseClient = null;
 
 
+/* =========================================================
+   STATE
+========================================================= */
+
+let selectedFeature = null;
+
+let featurePermissions = {};
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
 function initializeSupabase(){
 
-    try{
-
-        if(
-            window.supabase &&
-            typeof window.supabase.createClient === "function"
-        ){
-
-            supabaseClient =
-                window.supabase.createClient(
-                    SUPABASE_URL,
-                    SUPABASE_PUBLISHABLE_KEY
-                );
-
-            return true;
-
-        }
-
-        return false;
-
-    }
-    catch(error){
+    if(
+        !window.supabase ||
+        typeof window.supabase.createClient !== "function"
+    ){
 
         console.error(
-            "Supabase initialization error:",
-            error
+            "Supabase library failed to load."
         );
 
         return false;
 
     }
 
+
+    supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+
+    return true;
+
 }
 
 
 /* =========================================================
-   HELPERS
+   ELEMENTS
 ========================================================= */
 
-function money(value){
-
-    return Number(value || 0).toLocaleString(
-        "en-US",
-        {
-            style:"currency",
-            currency:"USD"
-        }
+const menuButton =
+    document.getElementById(
+        "menuButton"
     );
 
-}
+const menuContent =
+    document.getElementById(
+        "menuContent"
+    );
 
+const featureCard =
+    document.getElementById(
+        "featureCard"
+    );
 
-function setText(id,value){
+const continueButton =
+    document.getElementById(
+        "continueButton"
+    );
 
-    const element =
-        document.getElementById(id);
+const warning =
+    document.getElementById(
+        "featureWarning"
+    );
 
-    if(!element){
-        return;
-    }
-
-    element.textContent =
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
-            ? "Not available"
-            : value;
-
-}
+const resultBox =
+    document.getElementById(
+        "resultBox"
+    );
 
 
 /* =========================================================
    MENU
 ========================================================= */
 
-const menuButton =
-    document.getElementById("menuButton");
+menuButton.addEventListener(
+    "click",
+    function(event){
 
-const menuContent =
-    document.getElementById("menuContent");
+        event.stopPropagation();
 
-
-function closeMenu(){
-
-    if(menuContent){
-
-        menuContent.classList.remove("show");
+        menuContent.classList.toggle(
+            "show"
+        );
 
     }
-
-}
-
-
-function toggleMenu(event){
-
-    event.stopPropagation();
-
-    if(menuContent){
-
-        menuContent.classList.toggle("show");
-
-    }
-
-}
-
-
-if(menuButton){
-
-    menuButton.addEventListener(
-        "click",
-        toggleMenu
-    );
-
-}
+);
 
 
 document.addEventListener(
@@ -1436,160 +775,46 @@ document.addEventListener(
     function(event){
 
         if(
-            menuContent &&
             !menuContent.contains(event.target) &&
-            menuButton &&
             !menuButton.contains(event.target)
         ){
 
-            closeMenu();
+            menuContent.classList.remove(
+                "show"
+            );
 
         }
 
     }
 );
 
-
-/* =========================================================
-   CARD NAVIGATION
-========================================================= */
-
-function hideAllCards(){
-
-    [
-        "profileCard",
-        "depositCard",
-        "caseCard",
-        "withdrawCard"
-    ].forEach(
-        function(id){
-
-            const card =
-                document.getElementById(id);
-
-            if(card){
-
-                card.style.display =
-                    "none";
-
-            }
-
-        }
-    );
-
-}
-
-
-function showProfile(){
-
-    hideAllCards();
-
-    document.getElementById(
-        "profileCard"
-    ).style.display = "block";
-
-    closeMenu();
-
-    loadProfile();
-
-}
-
-
-function showDepositDetails(){
-
-    hideAllCards();
-
-    document.getElementById(
-        "depositCard"
-    ).style.display = "block";
-
-    closeDepositResults();
-
-    closeMenu();
-
-}
-
-
-function showCaseDetails(){
-
-    hideAllCards();
-
-    document.getElementById(
-        "caseCard"
-    ).style.display = "block";
-
-    closeMenu();
-
-}
-
-
-function showWithdraw(){
-
-    hideAllCards();
-
-    document.getElementById(
-        "withdrawCard"
-    ).style.display = "block";
-
-    closeMenu();
-
-    loadBalance();
-
-}
-
-
-/* =========================================================
-   MENU EVENTS
-========================================================= */
 
 menuContent.addEventListener(
     "click",
     function(event){
 
-        const link =
-            event.target.closest("a");
+        const button =
+            event.target.closest("button");
 
-        if(!link){
+        if(!button){
             return;
         }
 
+
         const action =
-            link.dataset.action;
+            button.dataset.action;
+
+
+        if(action === "features"){
+
+            openFeatures();
+
+        }
 
 
         if(action === "logout"){
 
-            logoutUser();
-
-            return;
-
-        }
-
-
-        event.preventDefault();
-
-
-        if(action === "profile"){
-
-            showProfile();
-
-        }
-
-        else if(action === "deposit"){
-
-            showDepositDetails();
-
-        }
-
-        else if(action === "case"){
-
-            showCaseDetails();
-
-        }
-
-        else if(action === "withdraw"){
-
-            showWithdraw();
+            clearDemoSession();
 
         }
 
@@ -1598,10 +823,68 @@ menuContent.addEventListener(
 
 
 /* =========================================================
-   PROFILE
+   OPEN FEATURES
 ========================================================= */
 
-async function getCurrentProfile(){
+async function openFeatures(){
+
+    menuContent.classList.remove(
+        "show"
+    );
+
+
+    featureCard.style.display =
+        "block";
+
+
+    resultBox.style.display =
+        "none";
+
+
+    await loadFeaturePermissions();
+
+
+    resetFeatureSelection();
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetFeatureSelection(){
+
+    selectedFeature = null;
+
+
+    document
+        .querySelectorAll(
+            'input[name="demoFeature"]'
+        )
+        .forEach(
+            function(input){
+
+                input.checked = false;
+
+            }
+        );
+
+
+    continueButton.disabled = true;
+
+
+    warning.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   LOAD CURRENT USER
+========================================================= */
+
+async function getCurrentUser(){
 
     if(!supabaseClient){
 
@@ -1612,32 +895,11 @@ async function getCurrentProfile(){
     }
 
 
-    const savedEmail =
-        sessionStorage.getItem(
-            "lockerEmail"
-        );
-
-
-    if(!savedEmail){
-
-        throw new Error(
-            "No login email found."
-        );
-
-    }
-
-
-    const {data,error} =
-        await supabaseClient
-            .from("profiles")
-            .select(
-                "id, full_name, email, phone, address"
-            )
-            .ilike(
-                "email",
-                savedEmail.trim().toLowerCase()
-            )
-            .limit(1);
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getUser();
 
 
     if(error){
@@ -1647,168 +909,50 @@ async function getCurrentProfile(){
     }
 
 
-    if(!data || data.length === 0){
+    if(!data.user){
 
         throw new Error(
-            "No profile found."
+            "No authenticated user."
         );
 
     }
 
 
-    const profile =
-        data[0];
-
-
-    sessionStorage.setItem(
-        "lockerProfileId",
-        profile.id
-    );
-
-
-    return profile;
-
-}
-
-
-async function loadProfile(){
-
-    try{
-
-        const profile =
-            await getCurrentProfile();
-
-
-        setText(
-            "accountHolder",
-            profile.full_name
-        );
-
-        setText(
-            "profileName",
-            profile.full_name
-        );
-
-        setText(
-            "profileEmail",
-            profile.email
-        );
-
-        setText(
-            "profilePhone",
-            profile.phone
-        );
-
-        setText(
-            "profileAddressValue",
-            profile.address
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "Profile error:",
-            error
-        );
-
-    }
+    return data.user;
 
 }
 
 
 /* =========================================================
-   BALANCE
+   LOAD FEATURE PERMISSIONS
 ========================================================= */
 
-async function loadBalance(){
+async function loadFeaturePermissions(){
 
     try{
 
-        const profile =
-            await getCurrentProfile();
+        const user =
+            await getCurrentUser();
 
 
-        const {data,error} =
-            await supabaseClient
-                .from("accounts")
-                .select("balance")
-                .eq(
-                    "profile_id",
-                    profile.id
-                )
-                .maybeSingle();
-
-
-        if(error){
-
-            throw error;
-
-        }
-
-
-        const balance =
-            data
-                ? Number(data.balance || 0)
-                : 0;
-
-
-        setText(
-            "availableBalance",
-            money(balance)
-        );
-
-        setText(
-            "withdrawBalance",
-            money(balance)
-        );
-
-    }
-    catch(error){
-
-        console.error(
-            "Balance error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   TRANSACTIONS
-========================================================= */
-
-async function loadTransactions(){
-
-    const body =
         document.getElementById(
-            "transactionBody"
-        );
+            "userId"
+        ).textContent =
+            user.id;
 
 
-    try{
-
-        const profile =
-            await getCurrentProfile();
-
-
-        const {data,error} =
+        const {
+            data,
+            error
+        } =
             await supabaseClient
-                .from("transactions")
+                .from("user_features")
                 .select(
-                    "transaction_date, transaction_type, description, amount"
+                    "feature_name, enabled"
                 )
                 .eq(
-                    "profile_id",
-                    profile.id
-                )
-                .order(
-                    "transaction_date",
-                    {
-                        ascending:false
-                    }
+                    "user_id",
+                    user.id
                 );
 
 
@@ -1819,137 +963,40 @@ async function loadTransactions(){
         }
 
 
-        if(!data || data.length === 0){
+        featurePermissions = {};
 
-            body.innerHTML = `
-                <tr>
-                    <td
-                        colspan="4"
-                        class="empty-transactions">
 
-                        No transaction history.
+        if(data){
 
-                    </td>
-                </tr>
-            `;
+            data.forEach(
+                function(row){
 
-            return;
+                    featurePermissions[
+                        row.feature_name
+                    ] =
+                        row.enabled === true;
+
+                }
+            );
 
         }
 
 
-        body.innerHTML = "";
-
-
-        data.forEach(
-            function(transaction){
-
-                const row =
-                    document.createElement("tr");
-
-
-                const dateCell =
-                    document.createElement("td");
-
-                dateCell.textContent =
-                    transaction.transaction_date
-                        ? new Date(
-                            transaction.transaction_date
-                          ).toLocaleDateString(
-                            "en-US"
-                          )
-                        : "—";
-
-
-                const typeCell =
-                    document.createElement("td");
-
-                typeCell.textContent =
-                    transaction.transaction_type ||
-                    "Transaction";
-
-
-                const descriptionCell =
-                    document.createElement("td");
-
-                descriptionCell.textContent =
-                    transaction.description || "";
-
-
-                const amountCell =
-                    document.createElement("td");
-
-
-                const amount =
-                    Number(
-                        transaction.amount || 0
-                    );
-
-
-                const type =
-                    String(
-                        transaction.transaction_type || ""
-                    ).toLowerCase();
-
-
-                if(type === "credit"){
-
-                    amountCell.className =
-                        "credit";
-
-                    amountCell.textContent =
-                        "+ " + money(amount);
-
-                }
-
-                else if(type === "debit"){
-
-                    amountCell.className =
-                        "debit";
-
-                    amountCell.textContent =
-                        "- " + money(amount);
-
-                }
-
-                else{
-
-                    amountCell.textContent =
-                        money(amount);
-
-                }
-
-
-                row.appendChild(dateCell);
-                row.appendChild(typeCell);
-                row.appendChild(descriptionCell);
-                row.appendChild(amountCell);
-
-
-                body.appendChild(row);
-
-            }
+        console.log(
+            "Feature permissions:",
+            featurePermissions
         );
 
     }
     catch(error){
 
         console.error(
-            "Transactions error:",
+            "Permission loading error:",
             error
         );
 
-        body.innerHTML = `
-            <tr>
-                <td
-                    colspan="4"
-                    class="empty-transactions">
 
-                    Unable to load transaction history.
-
-                </td>
-            </tr>
-        `;
+        featurePermissions = {};
 
     }
 
@@ -1957,203 +1004,210 @@ async function loadTransactions(){
 
 
 /* =========================================================
-   DEPOSIT DETAILS
+   FEATURE SELECTION
 ========================================================= */
 
-const depositContinue =
-    document.getElementById(
-        "depositContinue"
+document
+    .querySelectorAll(
+        'input[name="demoFeature"]'
+    )
+    .forEach(
+        function(input){
+
+            input.addEventListener(
+                "change",
+                function(){
+
+                    selectedFeature =
+                        this.value;
+
+
+                    updateContinueButton();
+
+                }
+            );
+
+        }
     );
 
 
-depositContinue.addEventListener(
+/* =========================================================
+   CHECK PERMISSION
+========================================================= */
+
+function isFeatureEnabled(
+    featureName
+){
+
+    return (
+        featurePermissions[
+            featureName
+        ] === true
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE CONTINUE
+========================================================= */
+
+function updateContinueButton(){
+
+    warning.style.display =
+        "none";
+
+
+    if(!selectedFeature){
+
+        continueButton.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    const enabled =
+        isFeatureEnabled(
+            selectedFeature
+        );
+
+
+    if(enabled){
+
+        continueButton.disabled =
+            false;
+
+    }
+    else{
+
+        continueButton.disabled =
+            true;
+
+
+        warning.textContent =
+            "This feature is not activated for your account at this time.";
+
+
+        warning.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   CONTINUE
+========================================================= */
+
+continueButton.addEventListener(
     "click",
-    handleDepositContinue
+    async function(){
+
+        if(!selectedFeature){
+
+            return;
+
+        }
+
+
+        /*
+         * Check permission again.
+         */
+
+        const enabled =
+            isFeatureEnabled(
+                selectedFeature
+            );
+
+
+        if(!enabled){
+
+            continueButton.disabled =
+                true;
+
+            warning.textContent =
+                "This feature is not activated for your account at this time.";
+
+            warning.style.display =
+                "block";
+
+            return;
+
+        }
+
+
+        await loadFeatureData(
+            selectedFeature
+        );
+
+    }
 );
 
 
-function handleDepositContinue(){
-
-    const selected =
-        document.querySelector(
-            'input[name="depositMethod"]:checked'
-        );
-
-
-    if(!selected){
-
-        document.getElementById(
-            "depositError"
-        ).style.display = "block";
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "depositError"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "depositSelection"
-    ).style.display = "none";
-
-
-    if(selected.value === "cash"){
-
-        document.getElementById(
-            "cashPickupResult"
-        ).style.display = "block";
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "wireResult"
-    ).style.display = "block";
-
-
-    loadWireDetails(
-        selected.value
-    );
-
-}
-
-
-function closeDepositResults(){
-
-    document.getElementById(
-        "depositSelection"
-    ).style.display = "block";
-
-
-    document.getElementById(
-        "cashPickupResult"
-    ).style.display = "none";
-
-
-    document.getElementById(
-        "wireResult"
-    ).style.display = "none";
-
-
-    const selected =
-        document.querySelector(
-            'input[name="depositMethod"]:checked'
-        );
-
-
-    if(selected){
-
-        selected.checked = false;
-
-    }
-
-}
-
-
-function backToDepositMethods(){
-
-    closeDepositResults();
-
-}
-
-
 /* =========================================================
-   LOAD WIRE INFORMATION FROM SUPABASE
+   LOAD FEATURE DATA
 ========================================================= */
 
-async function loadWireDetails(type){
+async function loadFeatureData(
+    featureName
+){
 
-    const title =
-        document.getElementById(
-            "wireTitle"
-        );
-
-
-    const routingRow =
-        document.getElementById(
-            "routingRow"
-        );
+    continueButton.disabled =
+        true;
 
 
-    const swiftRow =
-        document.getElementById(
-            "swiftRow"
-        );
+    warning.style.display =
+        "none";
 
 
-    if(title){
-
-        title.textContent =
-            type === "domestic"
-                ? "Domestic Wire Details"
-                : "International Wire Details";
-
-    }
+    resultBox.style.display =
+        "block";
 
 
-    setText(
-        "wireBankName",
-        "Loading..."
-    );
+    document.getElementById(
+        "resultName"
+    ).textContent =
+        "Loading...";
 
-    setText(
-        "wireAccountName",
-        "Loading..."
-    );
 
-    setText(
-        "wireAccountNumber",
-        "Loading..."
-    );
+    document.getElementById(
+        "resultDescription"
+    ).textContent =
+        "Loading...";
 
-    setText(
-        "wireAccountAddress",
-        "Loading..."
-    );
 
-    setText(
-        "wireRoutingNumber",
-        "Loading..."
-    );
+    document.getElementById(
+        "resultValue"
+    ).textContent =
+        "Loading...";
 
-    setText(
-        "wireSwift",
-        "Loading..."
-    );
 
-    setText(
-        "wireBankAddress",
-        "Loading..."
-    );
+    document.getElementById(
+        "resultStatus"
+    ).textContent =
+        "Loading...";
 
 
     try{
 
-        const {data,error} =
+        const {
+            data,
+            error
+        } =
             await supabaseClient
-                .from("wire_information")
-                .select(`
-                    wire_type,
-                    bank_name,
-                    account_name,
-                    account_number,
-                    account_address,
-                    routing_number,
-                    swift_bic,
-                    bank_address
-                `)
-                .eq(
-                    "wire_type",
-                    type
+                .from("feature_data")
+                .select(
+                    "name, description, value, status"
                 )
                 .eq(
-                    "is_active",
+                    "feature_name",
+                    featureName
+                )
+                .eq(
+                    "active",
                     true
                 )
                 .maybeSingle();
@@ -2169,193 +1223,142 @@ async function loadWireDetails(type){
         if(!data){
 
             throw new Error(
-                "No wire information found."
+                "No data found."
             );
 
         }
 
 
-        /*
-         * Every displayed field comes from Supabase.
-         */
-
-        setText(
-            "wireBankName",
-            data.bank_name
-        );
-
-        setText(
-            "wireAccountName",
-            data.account_name
-        );
-
-        setText(
-            "wireAccountNumber",
-            data.account_number
-        );
-
-        setText(
-            "wireAccountAddress",
-            data.account_address
-        );
-
-        setText(
-            "wireRoutingNumber",
-            data.routing_number
-        );
-
-        setText(
-            "wireSwift",
-            data.swift_bic
-        );
-
-        setText(
-            "wireBankAddress",
-            data.bank_address
-        );
+        document.getElementById(
+            "resultTitle"
+        ).textContent =
+            data.name;
 
 
-        /*
-         * Domestic:
-         * show routing number
-         */
-
-        if(type === "domestic"){
-
-            routingRow.style.display =
-                "";
-
-            swiftRow.style.display =
-                "none";
-
-        }
+        document.getElementById(
+            "resultName"
+        ).textContent =
+            data.name;
 
 
-        /*
-         * International:
-         * show SWIFT/BIC
-         */
+        document.getElementById(
+            "resultDescription"
+        ).textContent =
+            data.description;
 
-        else{
 
-            routingRow.style.display =
-                "none";
+        document.getElementById(
+            "resultValue"
+        ).textContent =
+            data.value;
 
-            swiftRow.style.display =
-                "";
 
-        }
+        document.getElementById(
+            "resultStatus"
+        ).textContent =
+            data.status;
 
     }
     catch(error){
 
         console.error(
-            "Wire information error:",
+            "Feature data error:",
             error
         );
 
 
-        setText(
-            "wireBankName",
-            "Unable to load"
-        );
+        document.getElementById(
+            "resultTitle"
+        ).textContent =
+            "Unable to load";
 
-        setText(
-            "wireAccountName",
-            "Unable to load"
-        );
 
-        setText(
-            "wireAccountNumber",
-            "Unable to load"
-        );
+        document.getElementById(
+            "resultName"
+        ).textContent =
+            "Unable to load";
 
-        setText(
-            "wireAccountAddress",
-            "Unable to load"
-        );
 
-        setText(
-            "wireRoutingNumber",
-            "Unable to load"
-        );
+        document.getElementById(
+            "resultDescription"
+        ).textContent =
+            error.message;
 
-        setText(
-            "wireSwift",
-            "Unable to load"
-        );
 
-        setText(
-            "wireBankAddress",
-            "Unable to load"
-        );
+        document.getElementById(
+            "resultValue"
+        ).textContent =
+            "—";
+
+
+        document.getElementById(
+            "resultStatus"
+        ).textContent =
+            "Unavailable";
 
     }
 
-}
 
-
-/* =========================================================
-   LOGOUT
-========================================================= */
-
-function logoutUser(){
-
-    sessionStorage.removeItem(
-        "lockerEmail"
-    );
-
-    sessionStorage.removeItem(
-        "lockerProfileId"
-    );
-
-
-    window.location.href =
-        "https://federaltradecommission1935-gif.github.io/home/login.html";
+    continueButton.disabled =
+        false;
 
 }
 
 
 /* =========================================================
-   WITHDRAW
+   BACK
 ========================================================= */
 
 document.getElementById(
-    "withdrawButton"
+    "backButton"
 ).addEventListener(
     "click",
     function(){
 
-        alert(
-            "Withdraw requests are not available in this demo."
-        );
+        resultBox.style.display =
+            "none";
+
+
+        updateContinueButton();
 
     }
 );
 
 
 /* =========================================================
-   START
+   CLEAR DEMO SESSION
 ========================================================= */
 
-async function loadDashboard(){
+function clearDemoSession(){
 
-    initializeSupabase();
+    /*
+     * This only clears the browser session.
+     * It does not delete the Supabase account.
+     */
 
-    await loadProfile();
+    sessionStorage.clear();
 
-    await Promise.all([
-        loadBalance(),
-        loadTransactions()
-    ]);
+
+    alert(
+        "Demo session cleared."
+    );
 
 }
 
 
-loadDashboard();
+/* =========================================================
+   START
+========================================================= */
+
+if(initializeSupabase()){
+
+    console.log(
+        "Demo dashboard initialized."
+    );
+
+}
 
 </script>
 
 </body>
-
 </html>
