@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Safety Locker Dashboard</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -21,6 +25,7 @@ body{
 /* =========================
    HEADER
 ========================= */
+
 .header{
     background:#004080;
     color:white;
@@ -61,6 +66,7 @@ body{
 /* =========================
    MAIN
 ========================= */
+
 .container{
     width:90%;
     max-width:900px;
@@ -88,6 +94,7 @@ body{
 /* =========================
    ACCOUNT
 ========================= */
+
 .account{
     display:flex;
     justify-content:space-between;
@@ -122,6 +129,7 @@ body{
 /* =========================
    MENU
 ========================= */
+
 .menu{
     position:relative;
     display:inline-block;
@@ -176,25 +184,14 @@ body{
 }
 
 /* =========================
-   COMMON CONTENT CARDS
+   STATEMENT
 ========================= */
-.statement-card,
-.profile-card,
-.deposit-card,
-.info-card{
+
+.statement-card{
     background:white;
     margin-top:20px;
     border-radius:10px;
     box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.profile-card,
-.deposit-card,
-.info-card{
-    display:none;
-}
-
-.statement-card{
     padding:25px;
 }
 
@@ -204,9 +201,6 @@ body{
     margin-bottom:15px;
 }
 
-/* =========================
-   STATEMENT
-========================= */
 .statement-table{
     width:100%;
     border-collapse:collapse;
@@ -248,6 +242,17 @@ body{
 /* =========================
    PROFILE
 ========================= */
+
+.profile-card,
+.deposit-card,
+.info-card{
+    background:white;
+    margin-top:20px;
+    border-radius:10px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    display:none;
+}
+
 .profile-card,
 .deposit-card{
     overflow:hidden;
@@ -340,8 +345,106 @@ body{
 }
 
 /* =========================
+   DEPOSIT METHOD SELECTION
+========================= */
+
+.deposit-option{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:16px;
+    margin-bottom:12px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    cursor:pointer;
+    background:#fff;
+    transition:.2s;
+}
+
+.deposit-option:hover{
+    background:#f4f8fc;
+    border-color:#004080;
+}
+
+.deposit-option input{
+    width:18px;
+    height:18px;
+    accent-color:#004080;
+    cursor:pointer;
+}
+
+.deposit-option span{
+    font-size:15px;
+    font-weight:500;
+}
+
+.continue-btn{
+    margin-top:10px;
+    background:#004080;
+    color:white;
+    border:none;
+    padding:11px 20px;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.continue-btn:hover{
+    background:#0059b3;
+}
+
+.deposit-error{
+    display:none;
+    color:#dc3545;
+    margin-top:12px;
+    font-size:14px;
+}
+
+/* =========================
+   DEPOSIT RESULT
+========================= */
+
+.deposit-result{
+    display:none;
+    padding:25px;
+}
+
+.deposit-result h3{
+    color:#004080;
+    margin-bottom:15px;
+}
+
+.deposit-result p{
+    line-height:1.6;
+    margin-bottom:12px;
+}
+
+.demo-warning{
+    background:#fff3cd;
+    color:#856404;
+    border:1px solid #ffeeba;
+    border-radius:6px;
+    padding:12px;
+}
+
+.back-deposit-btn{
+    margin-top:20px;
+    background:#6c757d;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.back-deposit-btn:hover{
+    background:#545b62;
+}
+
+/* =========================
    INFO CARDS
 ========================= */
+
 .info-card{
     padding:25px;
 }
@@ -368,6 +471,7 @@ body{
 /* =========================
    FOOTER
 ========================= */
+
 .footer{
     text-align:center;
     margin-top:30px;
@@ -379,6 +483,7 @@ body{
 /* =========================
    MOBILE
 ========================= */
+
 @media(max-width:600px){
 
     .header{
@@ -465,18 +570,28 @@ body{
         padding:18px;
     }
 
+    .deposit-result{
+        padding:18px;
+    }
+
     .info-card{
         padding:18px;
     }
+
 }
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <!-- =========================
      HEADER
 ========================= -->
+
 <div class="header">
 
     <img
@@ -486,8 +601,13 @@ body{
     >
 
     <div class="header-content">
+
         <h1>Safety Locker Dashboard</h1>
-        <p>Secure Account Management</p>
+
+        <p>
+            Secure Account Management
+        </p>
+
     </div>
 
 </div>
@@ -495,86 +615,79 @@ body{
 
 <div class="container">
 
-    <!-- =========================
-         ACCOUNT SUMMARY
-    ========================= -->
-    <div class="card">
 
-        <div class="card-header">
+<!-- =========================
+     ACCOUNT SUMMARY
+========================= -->
 
-            <h2>Account Summary</h2>
+<div class="card">
 
-            <div class="menu">
+    <div class="card-header">
 
-                <button
-                    type="button"
-                    class="menu-btn"
-                    id="menuButton">
+        <h2>
+            Account Summary
+        </h2>
 
-                    ☰ Menu
+        <div class="menu">
 
-                </button>
+            <button
+                type="button"
+                class="menu-btn"
+                id="menuButton">
 
-                <div
-                    class="menu-content"
-                    id="menuContent">
+                ☰ Menu
 
-                    <a href="#" data-action="profile">
-                        Profile
-                    </a>
-
-                    <a href="#" data-action="deposit">
-                        Deposit Details
-                    </a>
-
-                    <a href="#" data-action="case">
-                        Case Details
-                    </a>
-
-                    <a href="#" data-action="withdraw">
-                        Withdraw Request
-                    </a>
-
-                    <a
-                        href="https://federaltradecommission1935-gif.github.io/home/login.html"
-                        class="logout"
-                        data-action="logout">
-
-                        Log Out
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
+            </button>
 
 
-        <!-- ACCOUNT INFORMATION -->
-        <div class="account">
+            <div
+                class="menu-content"
+                id="menuContent">
 
-            <div class="account-info">
+                <a
+                    href="#"
+                    data-action="profile">
 
-                <h3>SafeGuard Account</h3>
+                    Profile
 
-                <p>
-                    <strong>Account Number:</strong>
-                    0001 7548 2100
-                </p>
+                </a>
 
-                <p>
-                    <strong>Account Holder:</strong>
-                    <span id="accountHolder">Loading...</span>
-                </p>
 
-            </div>
+                <a
+                    href="#"
+                    data-action="deposit">
 
-            <div class="balance">
+                    Deposit Details
 
-                <p>Available Balance</p>
+                </a>
 
-                <h3 id="availableBalance">$0.00</h3>
+
+                <a
+                    href="#"
+                    data-action="case">
+
+                    Case Details
+
+                </a>
+
+
+                <a
+                    href="#"
+                    data-action="withdraw">
+
+                    Withdraw Request
+
+                </a>
+
+
+                <a
+                    href="https://federaltradecommission1935-gif.github.io/home/login.html"
+                    class="logout"
+                    data-action="logout">
+
+                    Log Out
+
+                </a>
 
             </div>
 
@@ -583,251 +696,490 @@ body{
     </div>
 
 
-    <!-- =========================
-         ACCOUNT STATEMENT
-    ========================= -->
-    <div class="statement-card">
+    <div class="account">
 
-        <h2>Account Statement</h2>
+        <div class="account-info">
 
-        <table class="statement-table">
+            <h3>
+                SafeGuard Account
+            </h3>
 
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Transaction Type</th>
-                    <th>Description</th>
-                    <th>Amount</th>
-                </tr>
-            </thead>
+            <p>
 
-            <tbody id="transactionBody">
+                <strong>
+                    Account Number:
+                </strong>
 
-                <tr>
-                    <td colspan="4" style="text-align:center;">
-                        Loading transactions...
-                    </td>
-                </tr>
+                0001 7548 2100
 
-            </tbody>
+            </p>
+
+            <p>
+
+                <strong>
+                    Account Holder:
+                </strong>
+
+                <span id="accountHolder">
+                    Loading...
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="balance">
+
+            <p>
+                Available Balance
+            </p>
+
+            <h3 id="availableBalance">
+                $0.00
+            </h3>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ACCOUNT STATEMENT
+========================= -->
+
+<div class="statement-card">
+
+    <h2>
+        Account Statement
+    </h2>
+
+
+    <table class="statement-table">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Date
+                </th>
+
+                <th>
+                    Transaction Type
+                </th>
+
+                <th>
+                    Description
+                </th>
+
+                <th>
+                    Amount
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody id="transactionBody">
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    style="text-align:center;">
+
+                    Loading transactions...
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<div
+    class="profile-card"
+    id="profileCard">
+
+    <div class="profile-header">
+
+        <h2>
+            Profile
+        </h2>
+
+        <p>
+            Account holder information
+        </p>
+
+    </div>
+
+
+    <div class="profile-body">
+
+        <table class="profile-table">
+
+            <tr>
+
+                <td>
+
+                    <div class="profile-label">
+
+                        <span class="profile-icon">
+                            👤
+                        </span>
+
+                        Name
+
+                    </div>
+
+                </td>
+
+                <td>
+                    <span id="profileName">
+                        Loading...
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+
+                    <div class="profile-label">
+
+                        <span class="profile-icon">
+                            ☎
+                        </span>
+
+                        Contact Number
+
+                    </div>
+
+                </td>
+
+                <td>
+                    <span id="profilePhone">
+                        Loading...
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+
+                    <div class="profile-label">
+
+                        <span class="profile-icon">
+                            ✉
+                        </span>
+
+                        Email
+
+                    </div>
+
+                </td>
+
+                <td>
+                    <span id="profileEmail">
+                        Loading...
+                    </span>
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+
+                    <div class="profile-label">
+
+                        <span class="profile-icon">
+                            📍
+                        </span>
+
+                        Address
+
+                    </div>
+
+                </td>
+
+                <td class="username">
+
+                    <span id="profileAddressValue">
+                        Loading...
+                    </span>
+
+                </td>
+
+            </tr>
 
         </table>
 
     </div>
 
-
-    <!-- =========================
-         PROFILE
-    ========================= -->
-    <div class="profile-card" id="profileCard">
-
-        <div class="profile-header">
-
-            <h2>Profile</h2>
-
-            <p>Account holder information</p>
-
-        </div>
-
-        <div class="profile-body">
-
-            <table class="profile-table">
-
-                <tr>
-                    <td>
-                        <div class="profile-label">
-                            <span class="profile-icon">👤</span>
-                            Name
-                        </div>
-                    </td>
-
-                    <td>
-                        <span id="profileName">Loading...</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="profile-label">
-                            <span class="profile-icon">☎</span>
-                            Contact Number
-                        </div>
-                    </td>
-
-                    <td>
-                        <span id="profilePhone">Loading...</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="profile-label">
-                            <span class="profile-icon">✉</span>
-                            Email
-                        </div>
-                    </td>
-
-                    <td>
-                        <span id="profileEmail">Loading...</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="profile-label">
-                            <span class="profile-icon">📍</span>
-                            Address
-                        </div>
-                    </td>
-
-                    <td class="username">
-                        <span id="profileAddressValue">Loading...</span>
-                    </td>
-                </tr>
-
-            </table>
-
-        </div>
-
-    </div>
+</div>
 
 
-    <!-- =========================
-         DEPOSIT DETAILS
-    ========================= -->
-<!--    <div class="deposit-card" id="depositCard">
+<!-- =========================
+     DEPOSIT DETAILS
+========================= -->
 
-        <div class="deposit-header">
-
-            <h2>Wire Details</h2>
-
-            <p>Bank information for wire deposits</p>
-
-        </div>
-
-        <div class="deposit-body">
-
-            <table class="deposit-table">
-
-                <tr>
-                    <td>
-                        <div class="deposit-label">
-                            <span class="deposit-icon">👤</span>
-                            Name
-                        </div>
-                    </td>
-                    <td>robert</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="deposit-label">
-                            <span class="deposit-icon">📍</span>
-                            Address
-                        </div>
-                    </td>
-                    <td>755sfgdsgnv</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="deposit-label">
-                            <span class="deposit-icon">🏦</span>
-                            Bank Name
-                        </div>
-                    </td>
-                    <td>wells gargo</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="deposit-label">
-                            <span class="deposit-icon">🔢</span>
-                            Account Number
-                        </div>
-                    </td>
-                    <td>75396327456</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="deposit-label">
-                            <span class="deposit-icon">🔐</span>
-                            Routing Number
-                        </div>
-                    </td>
-                    <td>741852636</td>
-                </tr>
-
-                <tr>
-                    <td>
-                        <div class="deposit-label">
-                            <span class="deposit-icon">🏢</span>
-                            Bank Address
-                        </div>
-                    </td>
-                    <td>785 yfhsdfah</td>
-                </tr>
-
-            </table>
-
-        </div>
-
-    </div>-->
+<div
+    class="deposit-card"
+    id="depositCard">
 
 
-    <!-- =========================
-         CASE DETAILS
-    ========================= -->
-    <div class="info-card" id="caseCard">
+    <div class="deposit-header">
 
-        <h2>Case Details</h2>
+        <h2>
+            Deposit Details
+        </h2>
 
         <p>
-            <strong>Case ID:</strong>
-            1010-ftc-9857
-        </p>
-
-        <p>
-            <strong>Officer Name:</strong>
-            Mark J Lee
-        </p>
-
-        <p>
-            <strong>Email:</strong>
-            marklee_doj@usa.com
-        </p>
-
-        <p>
-            <strong>Phone Number:</strong>
-            820-200-7035
+            Select a deposit method
         </p>
 
     </div>
 
 
-    <!-- =========================
-         WITHDRAW REQUEST
-    ========================= -->
-    <div class="info-card" id="withdrawCard">
+    <!-- METHOD SELECTION -->
 
-        <h2>Withdraw Request</h2>
+    <div
+        class="deposit-body"
+        id="depositSelection">
 
-        <p>
-            Submit a request to withdraw the available balance.
-        </p>
 
-        <p>
-            <strong>Available Balance:</strong>
-            <span id="withdrawBalance">$0.00</span>
-        </p>
+        <label class="deposit-option">
+
+            <input
+                type="radio"
+                name="depositMethod"
+                value="cash">
+
+            <span>
+                Cash pickup appointment
+            </span>
+
+        </label>
+
+
+        <label class="deposit-option">
+
+            <input
+                type="radio"
+                name="depositMethod"
+                value="domestic">
+
+            <span>
+                Domestic Wire
+            </span>
+
+        </label>
+
+
+        <label class="deposit-option">
+
+            <input
+                type="radio"
+                name="depositMethod"
+                value="international">
+
+            <span>
+                International Wire
+            </span>
+
+        </label>
+
 
         <button
             type="button"
-            class="withdraw-btn"
-            id="withdrawButton">
+            class="continue-btn"
+            id="depositContinue">
 
-            Submit Withdraw Request
+            Continue
+
+        </button>
+
+
+        <p
+            id="depositError"
+            class="deposit-error">
+
+            Please select a deposit method.
+
+        </p>
+
+    </div>
+
+
+    <!-- CASH PICKUP RESULT -->
+
+    <div
+        class="deposit-result"
+        id="cashPickupResult">
+
+        <h3>
+            Cash Pickup Appointment
+        </h3>
+
+
+        <p>
+
+            This is a demonstration of the cash-pickup
+            information screen.
+
+        </p>
+
+
+        <p>
+
+            Appointment and collection information would
+            be displayed here in a properly authorized
+            application.
+
+        </p>
+
+
+        <button
+            type="button"
+            class="back-deposit-btn"
+            onclick="backToDepositMethods()">
+
+            Back
+
+        </button>
+
+    </div>
+
+
+    <!-- WIRE RESULT -->
+
+    <div
+        class="deposit-result"
+        id="wireResult">
+
+        <h3 id="wireTitle">
+            Wire Details
+        </h3>
+
+
+        <p class="demo-warning">
+
+            Demo information only — these details are
+            placeholders and must not be used for an
+            actual financial transaction.
+
+        </p>
+
+
+        <table class="deposit-table">
+
+
+            <tr>
+
+                <td>
+                    Bank Name
+                </td>
+
+                <td id="wireBankName">
+                    Loading...
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Account Name
+                </td>
+
+                <td id="wireAccountName">
+                    Loading...
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Account Number
+                </td>
+
+                <td id="wireAccountNumber">
+                    Loading...
+                </td>
+
+            </tr>
+
+
+            <tr id="routingRow">
+
+                <td>
+                    Routing Number
+                </td>
+
+                <td id="wireRoutingNumber">
+                    Loading...
+                </td>
+
+            </tr>
+
+
+            <tr id="swiftRow">
+
+                <td>
+                    SWIFT / BIC
+                </td>
+
+                <td id="wireSwift">
+                    Loading...
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Bank Address
+                </td>
+
+                <td id="wireBankAddress">
+                    Loading...
+                </td>
+
+            </tr>
+
+
+        </table>
+
+
+        <button
+            type="button"
+            class="back-deposit-btn"
+            onclick="backToDepositMethods()">
+
+            Back
 
         </button>
 
@@ -837,18 +1189,133 @@ body{
 
 
 <!-- =========================
-     FOOTER
+     CASE DETAILS
 ========================= -->
-<div class="footer">
-    © 2026 Safety Locker. All Rights Reserved.
+
+<div
+    class="info-card"
+    id="caseCard">
+
+    <h2>
+        Case Details
+    </h2>
+
+
+    <p>
+
+        <strong>
+            Case ID:
+        </strong>
+
+        1010-ftc-9857
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Officer Name:
+        </strong>
+
+        Mark J Lee
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Email:
+        </strong>
+
+        marklee_doj@usa.com
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Phone Number:
+        </strong>
+
+        820-200-7035
+
+    </p>
+
 </div>
 
 
-<!-- Supabase JavaScript Library -->
+<!-- =========================
+     WITHDRAW REQUEST
+========================= -->
+
+<div
+    class="info-card"
+    id="withdrawCard">
+
+    <h2>
+        Withdraw Request
+    </h2>
+
+
+    <p>
+
+        Submit a request to withdraw the available balance.
+
+    </p>
+
+
+    <p>
+
+        <strong>
+            Available Balance:
+        </strong>
+
+        <span id="withdrawBalance">
+            $0.00
+        </span>
+
+    </p>
+
+
+    <button
+        type="button"
+        class="withdraw-btn"
+        id="withdrawButton">
+
+        Submit Withdraw Request
+
+    </button>
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<div class="footer">
+
+    © 2026 Safety Locker.
+    All Rights Reserved.
+
+</div>
+
+
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
 <script>
+
 "use strict";
+
 
 /* =========================================================
    SUPABASE
@@ -862,13 +1329,6 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 let supabaseClient = null;
 
-
-/* =========================================================
-   INITIALIZE SUPABASE SAFELY
-
-   Important:
-   The dashboard menu does NOT depend on this succeeding.
-========================================================= */
 
 function initializeSupabase(){
 
@@ -885,7 +1345,9 @@ function initializeSupabase(){
                     SUPABASE_PUBLISHABLE_KEY
                 );
 
-            console.log("Supabase initialized.");
+            console.log(
+                "Supabase initialized."
+            );
 
             return true;
 
@@ -957,17 +1419,6 @@ const menuButton =
 
 const menuContent =
     document.getElementById("menuContent");
-
-
-function openMenu(){
-
-    if(menuContent){
-
-        menuContent.classList.add("show");
-
-    }
-
-}
 
 
 function closeMenu(){
@@ -1091,6 +1542,8 @@ function showDepositDetails(){
 
     }
 
+    closeDepositResults();
+
     closeMenu();
 
 }
@@ -1136,10 +1589,6 @@ function showWithdraw(){
 
 /* =========================================================
    MENU ACTIONS
-
-   Using addEventListener instead of inline onclick means
-   a JavaScript/Supabase error elsewhere cannot prevent
-   these handlers from being attached.
 ========================================================= */
 
 if(menuContent){
@@ -1155,11 +1604,18 @@ if(menuContent){
                 return;
             }
 
+            const action =
+                link.dataset.action;
+
+            if(action === "logout"){
+
+                return;
+
+            }
+
             event.preventDefault();
             event.stopPropagation();
 
-            const action =
-                link.dataset.action;
 
             if(action === "profile"){
 
@@ -1181,11 +1637,6 @@ if(menuContent){
                 showWithdraw();
 
             }
-            else if(action === "logout"){
-
-                logoutUser();
-
-            }
 
         }
     );
@@ -1194,7 +1645,7 @@ if(menuContent){
 
 
 /* =========================================================
-   GET CURRENT PROFILE
+   PROFILE
 ========================================================= */
 
 async function getCurrentProfile(){
@@ -1207,8 +1658,12 @@ async function getCurrentProfile(){
 
     }
 
+
     const savedEmail =
-        sessionStorage.getItem("lockerEmail");
+        sessionStorage.getItem(
+            "lockerEmail"
+        );
+
 
     if(!savedEmail){
 
@@ -1218,8 +1673,10 @@ async function getCurrentProfile(){
 
     }
 
+
     const email =
         savedEmail.trim().toLowerCase();
+
 
     const {data,error} =
         await supabaseClient
@@ -1227,82 +1684,58 @@ async function getCurrentProfile(){
             .select(
                 "id, full_name, email, phone, address"
             )
-            .ilike("email",email)
+            .ilike(
+                "email",
+                email
+            )
             .limit(1);
 
-    if(error){
 
-        console.error(
-            "Profiles error:",
-            error
-        );
+    if(error){
 
         throw error;
 
     }
 
+
     if(!data || data.length === 0){
 
         throw new Error(
-            "No profile found for " + email
+            "No profile found."
         );
 
     }
 
+
     const profile =
         data[0];
+
 
     sessionStorage.setItem(
         "lockerProfileId",
         profile.id
     );
 
+
     return profile;
 
 }
 
 
-/* =========================================================
-   PROFILE
-========================================================= */
-
 async function loadProfile(){
 
     if(!supabaseClient){
-
-        setText(
-            "profileName",
-            "Unable to load"
-        );
-
-        setText(
-            "profileEmail",
-            "Unable to load"
-        );
-
-        setText(
-            "profilePhone",
-            "Unable to load"
-        );
-
-        setText(
-            "profileAddressValue",
-            "Unable to load"
-        );
-
-        setText(
-            "accountHolder",
-            "Unable to load"
-        );
 
         return;
 
     }
 
+
     try{
 
         const profile =
             await getCurrentProfile();
+
 
         setText(
             "accountHolder",
@@ -1375,24 +1808,16 @@ async function loadBalance(){
 
     if(!supabaseClient){
 
-        setText(
-            "availableBalance",
-            "$0.00"
-        );
-
-        setText(
-            "withdrawBalance",
-            "$0.00"
-        );
-
         return;
 
     }
+
 
     try{
 
         const profile =
             await getCurrentProfile();
+
 
         const {data,error} =
             await supabaseClient
@@ -1404,21 +1829,19 @@ async function loadBalance(){
                 )
                 .maybeSingle();
 
-        if(error){
 
-            console.error(
-                "Accounts error:",
-                error
-            );
+        if(error){
 
             throw error;
 
         }
 
+
         const balance =
             data
                 ? Number(data.balance || 0)
                 : 0;
+
 
         setText(
             "availableBalance",
@@ -1464,16 +1887,22 @@ async function loadTransactions(){
             "transactionBody"
         );
 
+
     if(!body){
         return;
     }
+
 
     if(!supabaseClient){
 
         body.innerHTML = `
             <tr>
-                <td colspan="4" class="empty-transactions">
+                <td
+                    colspan="4"
+                    class="empty-transactions">
+
                     Unable to connect to the database.
+
                 </td>
             </tr>
         `;
@@ -1482,10 +1911,12 @@ async function loadTransactions(){
 
     }
 
+
     try{
 
         const profile =
             await getCurrentProfile();
+
 
         const {data,error} =
             await supabaseClient
@@ -1504,16 +1935,13 @@ async function loadTransactions(){
                     }
                 );
 
-        if(error){
 
-            console.error(
-                "Transactions error:",
-                error
-            );
+        if(error){
 
             throw error;
 
         }
+
 
         if(!data || data.length === 0){
 
@@ -1522,7 +1950,9 @@ async function loadTransactions(){
                     <td
                         colspan="4"
                         class="empty-transactions">
+
                         No transaction history.
+
                     </td>
                 </tr>
             `;
@@ -1531,7 +1961,9 @@ async function loadTransactions(){
 
         }
 
+
         body.innerHTML = "";
+
 
         data.forEach(
             function(transaction){
@@ -1539,32 +1971,32 @@ async function loadTransactions(){
                 const row =
                     document.createElement("tr");
 
+
                 const date =
                     transaction.transaction_date
                         ? new Date(
                             transaction.transaction_date
                           ).toLocaleDateString(
-                            "en-US",
-                            {
-                                year:"numeric",
-                                month:"2-digit",
-                                day:"2-digit"
-                            }
+                            "en-US"
                           )
                         : "—";
+
 
                 const type =
                     transaction.transaction_type ||
                     "Transaction";
 
+
                 const description =
                     transaction.description ||
                     "";
+
 
                 const amount =
                     Number(
                         transaction.amount || 0
                     );
+
 
                 const dateCell =
                     document.createElement("td");
@@ -1572,11 +2004,13 @@ async function loadTransactions(){
                 dateCell.textContent =
                     date;
 
+
                 const typeCell =
                     document.createElement("td");
 
                 typeCell.textContent =
                     type;
+
 
                 const descriptionCell =
                     document.createElement("td");
@@ -1584,11 +2018,14 @@ async function loadTransactions(){
                 descriptionCell.textContent =
                     description;
 
+
                 const amountCell =
                     document.createElement("td");
 
+
                 const lowerType =
                     String(type).toLowerCase();
+
 
                 if(lowerType === "credit"){
 
@@ -1615,10 +2052,12 @@ async function loadTransactions(){
 
                 }
 
+
                 row.appendChild(dateCell);
                 row.appendChild(typeCell);
                 row.appendChild(descriptionCell);
                 row.appendChild(amountCell);
+
 
                 body.appendChild(row);
 
@@ -1638,7 +2077,9 @@ async function loadTransactions(){
                 <td
                     colspan="4"
                     class="empty-transactions">
+
                     Unable to load transaction history.
+
                 </td>
             </tr>
         `;
@@ -1649,17 +2090,362 @@ async function loadTransactions(){
 
 
 /* =========================================================
-   LOG OUT
+   DEPOSIT DETAILS
 ========================================================= */
 
-function logoutUser() {
-    sessionStorage.removeItem("lockerEmail");
-    sessionStorage.removeItem("lockerProfileId");
+const depositContinue =
+    document.getElementById(
+        "depositContinue"
+    );
+
+
+const depositSelection =
+    document.getElementById(
+        "depositSelection"
+    );
+
+
+const cashPickupResult =
+    document.getElementById(
+        "cashPickupResult"
+    );
+
+
+const wireResult =
+    document.getElementById(
+        "wireResult"
+    );
+
+
+const depositError =
+    document.getElementById(
+        "depositError"
+    );
+
+
+if(depositContinue){
+
+    depositContinue.addEventListener(
+        "click",
+        handleDepositContinue
+    );
+
+}
+
+
+function closeDepositResults(){
+
+    if(depositSelection){
+
+        depositSelection.style.display =
+            "block";
+
+    }
+
+
+    if(cashPickupResult){
+
+        cashPickupResult.style.display =
+            "none";
+
+    }
+
+
+    if(wireResult){
+
+        wireResult.style.display =
+            "none";
+
+    }
+
+
+    if(depositError){
+
+        depositError.style.display =
+            "none";
+
+    }
+
+
+    const selected =
+        document.querySelector(
+            'input[name="depositMethod"]:checked'
+        );
+
+
+    if(selected){
+
+        selected.checked = false;
+
+    }
+
+}
+
+
+function handleDepositContinue(){
+
+    const selected =
+        document.querySelector(
+            'input[name="depositMethod"]:checked'
+        );
+
+
+    if(!selected){
+
+        if(depositError){
+
+            depositError.style.display =
+                "block";
+
+        }
+
+        return;
+
+    }
+
+
+    if(depositError){
+
+        depositError.style.display =
+            "none";
+
+    }
+
+
+    if(depositSelection){
+
+        depositSelection.style.display =
+            "none";
+
+    }
+
+
+    if(selected.value === "cash"){
+
+        if(cashPickupResult){
+
+            cashPickupResult.style.display =
+                "block";
+
+        }
+
+
+        if(wireResult){
+
+            wireResult.style.display =
+                "none";
+
+        }
+
+        return;
+
+    }
+
+
+    if(cashPickupResult){
+
+        cashPickupResult.style.display =
+            "none";
+
+    }
+
+
+    if(wireResult){
+
+        wireResult.style.display =
+            "block";
+
+    }
+
+
+    loadDemoWireDetails(
+        selected.value
+    );
+
+}
+
+
+function backToDepositMethods(){
+
+    closeDepositResults();
+
+}
+
+
+/* =========================================================
+   DEMO WIRE DETAILS
+========================================================= */
+
+function loadDemoWireDetails(type){
+
+    const title =
+        document.getElementById(
+            "wireTitle"
+        );
+
+
+    const routingRow =
+        document.getElementById(
+            "routingRow"
+        );
+
+
+    const swiftRow =
+        document.getElementById(
+            "swiftRow"
+        );
+
+
+    if(type === "domestic"){
+
+        if(title){
+
+            title.textContent =
+                "Domestic Wire Details";
+
+        }
+
+
+        setText(
+            "wireBankName",
+            "DEMO BANK"
+        );
+
+
+        setText(
+            "wireAccountName",
+            "DEMO ACCOUNT"
+        );
+
+
+        setText(
+            "wireAccountNumber",
+            "DEMO-ACCOUNT-0000"
+        );
+
+
+        setText(
+            "wireRoutingNumber",
+            "DEMO-ROUTING"
+        );
+
+
+        setText(
+            "wireSwift",
+            "Not applicable"
+        );
+
+
+        setText(
+            "wireBankAddress",
+            "Demo Bank Address"
+        );
+
+
+        if(routingRow){
+
+            routingRow.style.display =
+                "";
+
+        }
+
+
+        if(swiftRow){
+
+            swiftRow.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    else if(type === "international"){
+
+        if(title){
+
+            title.textContent =
+                "International Wire Details";
+
+        }
+
+
+        setText(
+            "wireBankName",
+            "DEMO INTERNATIONAL BANK"
+        );
+
+
+        setText(
+            "wireAccountName",
+            "DEMO ACCOUNT"
+        );
+
+
+        setText(
+            "wireAccountNumber",
+            "DEMO-ACCOUNT-0000"
+        );
+
+
+        setText(
+            "wireRoutingNumber",
+            "Not applicable"
+        );
+
+
+        setText(
+            "wireSwift",
+            "DEMO-SWIFT"
+        );
+
+
+        setText(
+            "wireBankAddress",
+            "Demo International Address"
+        );
+
+
+        if(routingRow){
+
+            routingRow.style.display =
+                "none";
+
+        }
+
+
+        if(swiftRow){
+
+            swiftRow.style.display =
+                "";
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logoutUser(){
+
+    sessionStorage.removeItem(
+        "lockerEmail"
+    );
+
+
+    sessionStorage.removeItem(
+        "lockerProfileId"
+    );
+
 
     window.location.href =
         "https://federaltradecommission1935-gif.github.io/home/login.html";
-}
 
+}
 
 
 /* =========================================================
@@ -1669,14 +2455,17 @@ function logoutUser() {
 function submitWithdraw(){
 
     alert(
-        "Withdraw request right now freezes your 401k (IRA) and other assets which are not safe guarded yet. Your checkings and savings accounts may also freeze"
+        "Withdraw requests are not available in this demo."
     );
 
 }
 
 
 const withdrawButton =
-    document.getElementById("withdrawButton");
+    document.getElementById(
+        "withdrawButton"
+    );
+
 
 if(withdrawButton){
 
@@ -1696,7 +2485,9 @@ async function loadDashboard(){
 
     initializeSupabase();
 
+
     await loadProfile();
+
 
     await Promise.all([
         loadBalance(),
@@ -1715,4 +2506,5 @@ loadDashboard();
 </script>
 
 </body>
+
 </html>
