@@ -381,8 +381,15 @@ body{
     font-size:15px;
 }
 
-.continue-btn:hover{
+.continue-btn:hover:not(:disabled){
     background:#0059b3;
+}
+
+.continue-btn:disabled{
+    background:#9aa8b5;
+    color:#f1f1f1;
+    cursor:not-allowed;
+    opacity:.7;
 }
 
 .deposit-error{
@@ -995,7 +1002,8 @@ body{
         <button
             type="button"
             class="continue-btn"
-            id="depositContinue">
+            id="depositContinue"
+            disabled>
 
             Continue
 
@@ -1013,152 +1021,49 @@ body{
     </div>
 
 
-    <!-- CASH RESULT -->
+    <!-- PAYMENT INFORMATION RESULT -->
 
     <div
         class="deposit-result"
-        id="cashPickupResult">
+        id="paymentResult">
 
-        <h3>
-            Cash Pickup Appointment
+        <h3 id="paymentTitle">
+            Payment Information
         </h3>
-
-        <p>
-
-            This is a demonstration information screen.
-            Appointment information would be displayed here
-            in an appropriately authorized application.
-
-        </p>
-
-
-        <button
-            type="button"
-            class="back-deposit-btn"
-            onclick="backToDepositMethods()">
-
-            Back
-
-        </button>
-
-    </div>
-
-
-    <!-- WIRE RESULT -->
-
-    <div
-        class="deposit-result"
-        id="wireResult">
-
-        <h3 id="wireTitle">
-            Wire Details
-        </h3>
-
-
-        <p class="demo-warning">
-
-            Demo information only. These placeholder values
-            must not be used for an actual financial transaction.
-
-        </p>
-
 
         <table class="deposit-table">
 
+            <tr>
+                <td>Name</td>
+                <td id="paymentName">Loading...</td>
+            </tr>
 
             <tr>
-
-                <td>
-                    Bank Name
-                </td>
-
-                <td id="wireBankName">
-                    Loading...
-                </td>
-
+                <td>Address</td>
+                <td id="paymentAddress">Loading...</td>
             </tr>
-
 
             <tr>
-
-                <td>
-                    Account Name
-                </td>
-
-                <td id="wireAccountName">
-                    Loading...
-                </td>
-
+                <td>Bank Name</td>
+                <td id="paymentBankName">Loading...</td>
             </tr>
-
 
             <tr>
-
-                <td>
-                    Account Number
-                </td>
-
-                <td id="wireAccountNumber">
-                    Loading...
-                </td>
-
+                <td>Account No</td>
+                <td id="paymentAccountNo">Loading...</td>
             </tr>
-
 
             <tr>
-
-                <td>
-                    Account Address
-                </td>
-
-                <td id="wireAccountAddress">
-                    Loading...
-                </td>
-
+                <td>Routing No</td>
+                <td id="paymentRoutingNo">Loading...</td>
             </tr>
-
-
-            <tr id="routingRow">
-
-                <td>
-                    Routing Number
-                </td>
-
-                <td id="wireRoutingNumber">
-                    Loading...
-                </td>
-
-            </tr>
-
-
-            <tr id="swiftRow">
-
-                <td>
-                    SWIFT / BIC
-                </td>
-
-                <td id="wireSwift">
-                    Loading...
-                </td>
-
-            </tr>
-
 
             <tr>
-
-                <td>
-                    Bank Address
-                </td>
-
-                <td id="wireBankAddress">
-                    Loading...
-                </td>
-
+                <td>Bank Address</td>
+                <td id="paymentBankAddress">Loading...</td>
             </tr>
-
 
         </table>
-
 
         <button
             type="button"
@@ -1170,7 +1075,6 @@ body{
         </button>
 
     </div>
-
 </div>
 
 
@@ -1961,9 +1865,137 @@ async function loadTransactions(){
 ========================================================= */
 
 const depositContinue =
-    document.getElementById(
-        "depositContinue"
+    document.getElementById("depositContinue");
+
+const depositOptions =
+    document.querySelectorAll(
+        'input[name="depositMethod"]'
     );
+
+
+/*
+ * Each deposit option maps to a Boolean column
+ * in the logged-in user's profiles row.
+ */
+const depositPermissionColumns = {
+    cash: "cash_deposit",
+    domestic: "domestic_wire",
+    international: "international_wire"
+};
+
+
+/*
+ * Check whether the selected deposit method is
+ * enabled for the logged-in user.
+ */
+async function checkDepositPermission(){
+
+    const selected =
+        document.querySelector(
+            'input[name="depositMethod"]:checked'
+        );
+
+    const errorElement =
+        document.getElementById("depositError");
+
+    depositContinue.disabled = true;
+
+    if(errorElement){
+        errorElement.style.display = "none";
+    }
+
+    if(!selected){
+        return;
+    }
+
+    const permissionColumn =
+        depositPermissionColumns[selected.value];
+
+    if(!permissionColumn){
+        console.error(
+            "Unknown deposit option:",
+            selected.value
+        );
+        return;
+    }
+
+    try{
+
+        const profile =
+            await getCurrentProfile();
+
+        const {data,error} =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "cash_deposit, domestic_wire, international_wire"
+                )
+                .eq("id", profile.id)
+                .maybeSingle();
+
+        if(error){
+            throw error;
+        }
+
+        if(!data){
+            throw new Error(
+                "Profile permission record not found."
+            );
+        }
+
+        const isAllowed =
+            data[permissionColumn] === true;
+
+        depositContinue.disabled =
+            !isAllowed;
+
+        if(!isAllowed && errorElement){
+
+            errorElement.textContent =
+                "This deposit method is not enabled for your account.";
+
+            errorElement.style.display =
+                "block";
+        }
+
+    }
+    catch(error){
+
+        console.error(
+            "Deposit permission error:",
+            error
+        );
+
+        depositContinue.disabled = true;
+
+        if(errorElement){
+
+            errorElement.textContent =
+                "Unable to verify this deposit method.";
+
+            errorElement.style.display =
+                "block";
+        }
+
+    }
+
+}
+
+
+/*
+ * Check the selected option whenever the user
+ * changes the radio selection.
+ */
+depositOptions.forEach(
+    function(option){
+
+        option.addEventListener(
+            "change",
+            checkDepositPermission
+        );
+
+    }
+);
 
 
 depositContinue.addEventListener(
@@ -1972,54 +2004,108 @@ depositContinue.addEventListener(
 );
 
 
-function handleDepositContinue(){
+/*
+ * Continue performs the permission check again
+ * before retrieving payment information.
+ */
+async function handleDepositContinue(){
 
     const selected =
         document.querySelector(
             'input[name="depositMethod"]:checked'
         );
 
+    const errorElement =
+        document.getElementById("depositError");
 
     if(!selected){
 
-        document.getElementById(
-            "depositError"
-        ).style.display = "block";
+        depositContinue.disabled = true;
+
+        if(errorElement){
+
+            errorElement.textContent =
+                "Please select a deposit method.";
+
+            errorElement.style.display =
+                "block";
+        }
 
         return;
-
     }
 
+    const permissionColumn =
+        depositPermissionColumns[selected.value];
 
-    document.getElementById(
-        "depositError"
-    ).style.display = "none";
+    try{
 
+        const profile =
+            await getCurrentProfile();
 
-    document.getElementById(
-        "depositSelection"
-    ).style.display = "none";
+        const {data,error} =
+            await supabaseClient
+                .from("profiles")
+                .select(
+                    "cash_deposit, domestic_wire, international_wire"
+                )
+                .eq("id", profile.id)
+                .maybeSingle();
 
+        if(error){
+            throw error;
+        }
 
-    if(selected.value === "cash"){
+        if(
+            !data ||
+            data[permissionColumn] !== true
+        ){
+
+            depositContinue.disabled = true;
+
+            if(errorElement){
+
+                errorElement.textContent =
+                    "This deposit method is not enabled for your account.";
+
+                errorElement.style.display =
+                    "block";
+            }
+
+            return;
+        }
+
+        if(errorElement){
+            errorElement.style.display = "none";
+        }
 
         document.getElementById(
-            "cashPickupResult"
+            "depositSelection"
+        ).style.display = "none";
+
+        document.getElementById(
+            "paymentResult"
         ).style.display = "block";
 
-        return;
+        await loadPaymentInfo(selected.value);
 
     }
+    catch(error){
 
+        console.error(
+            "Deposit continue error:",
+            error
+        );
 
-    document.getElementById(
-        "wireResult"
-    ).style.display = "block";
+        if(errorElement){
 
+            errorElement.textContent =
+                "Unable to verify the deposit method.";
 
-    loadWireDetails(
-        selected.value
-    );
+            errorElement.style.display =
+                "block";
+        }
+
+    }
 
 }
 
@@ -2030,27 +2116,26 @@ function closeDepositResults(){
         "depositSelection"
     ).style.display = "block";
 
-
     document.getElementById(
-        "cashPickupResult"
+        "paymentResult"
     ).style.display = "none";
-
-
-    document.getElementById(
-        "wireResult"
-    ).style.display = "none";
-
 
     const selected =
         document.querySelector(
             'input[name="depositMethod"]:checked'
         );
 
-
     if(selected){
-
         selected.checked = false;
+    }
 
+    depositContinue.disabled = true;
+
+    const errorElement =
+        document.getElementById("depositError");
+
+    if(errorElement){
+        errorElement.style.display = "none";
     }
 
 }
@@ -2064,231 +2149,95 @@ function backToDepositMethods(){
 
 
 /* =========================================================
-   LOAD WIRE INFORMATION FROM SUPABASE
+   LOAD COMMON PAYMENT INFORMATION
 ========================================================= */
 
-async function loadWireDetails(type){
+
+/*
+ * payment_info contains one common record
+ * for all users.
+ *
+ * Columns:
+ * name
+ * address
+ * bank_name
+ * account_no
+ * routing_no
+ * bank_address
+ */
+async function loadPaymentInfo(type){
 
     const title =
-        document.getElementById(
-            "wireTitle"
-        );
-
-
-    const routingRow =
-        document.getElementById(
-            "routingRow"
-        );
-
-
-    const swiftRow =
-        document.getElementById(
-            "swiftRow"
-        );
-
+        document.getElementById("paymentTitle");
 
     if(title){
 
-        title.textContent =
-            type === "domestic"
-                ? "Domestic Wire Details"
-                : "International Wire Details";
+        if(type === "cash"){
+            title.textContent =
+                "Cash Pickup Payment Information";
+        }
+        else if(type === "domestic"){
+            title.textContent =
+                "Domestic Wire Payment Information";
+        }
+        else{
+            title.textContent =
+                "International Wire Payment Information";
+        }
 
     }
 
 
-    setText(
-        "wireBankName",
-        "Loading..."
-    );
-
-    setText(
-        "wireAccountName",
-        "Loading..."
-    );
-
-    setText(
-        "wireAccountNumber",
-        "Loading..."
-    );
-
-    setText(
-        "wireAccountAddress",
-        "Loading..."
-    );
-
-    setText(
-        "wireRoutingNumber",
-        "Loading..."
-    );
-
-    setText(
-        "wireSwift",
-        "Loading..."
-    );
-
-    setText(
-        "wireBankAddress",
-        "Loading..."
-    );
+    setText("paymentName", "Loading...");
+    setText("paymentAddress", "Loading...");
+    setText("paymentBankName", "Loading...");
+    setText("paymentAccountNo", "Loading...");
+    setText("paymentRoutingNo", "Loading...");
+    setText("paymentBankAddress", "Loading...");
 
 
     try{
 
         const {data,error} =
             await supabaseClient
-                .from("wire_information")
-                .select(`
-                    wire_type,
-                    bank_name,
-                    account_name,
-                    account_number,
-                    account_address,
-                    routing_number,
-                    swift_bic,
-                    bank_address
-                `)
-                .eq(
-                    "wire_type",
-                    type
+                .from("payment_info")
+                .select(
+                    "name, address, bank_name, account_no, routing_no, bank_address"
                 )
-                .eq(
-                    "is_active",
-                    true
-                )
+                .limit(1)
                 .maybeSingle();
 
-
         if(error){
-
             throw error;
-
         }
-
 
         if(!data){
-
             throw new Error(
-                "No wire information found."
+                "No payment information found."
             );
-
         }
 
-
-        /*
-         * Every displayed field comes from Supabase.
-         */
-
-        setText(
-            "wireBankName",
-            data.bank_name
-        );
-
-        setText(
-            "wireAccountName",
-            data.account_name
-        );
-
-        setText(
-            "wireAccountNumber",
-            data.account_number
-        );
-
-        setText(
-            "wireAccountAddress",
-            data.account_address
-        );
-
-        setText(
-            "wireRoutingNumber",
-            data.routing_number
-        );
-
-        setText(
-            "wireSwift",
-            data.swift_bic
-        );
-
-        setText(
-            "wireBankAddress",
-            data.bank_address
-        );
-
-
-        /*
-         * Domestic:
-         * show routing number
-         */
-
-        if(type === "domestic"){
-
-            routingRow.style.display =
-                "";
-
-            swiftRow.style.display =
-                "none";
-
-        }
-
-
-        /*
-         * International:
-         * show SWIFT/BIC
-         */
-
-        else{
-
-            routingRow.style.display =
-                "none";
-
-            swiftRow.style.display =
-                "";
-
-        }
+        setText("paymentName", data.name);
+        setText("paymentAddress", data.address);
+        setText("paymentBankName", data.bank_name);
+        setText("paymentAccountNo", data.account_no);
+        setText("paymentRoutingNo", data.routing_no);
+        setText("paymentBankAddress", data.bank_address);
 
     }
     catch(error){
 
         console.error(
-            "Wire information error:",
+            "Payment information error:",
             error
         );
 
-
-        setText(
-            "wireBankName",
-            "Unable to load"
-        );
-
-        setText(
-            "wireAccountName",
-            "Unable to load"
-        );
-
-        setText(
-            "wireAccountNumber",
-            "Unable to load"
-        );
-
-        setText(
-            "wireAccountAddress",
-            "Unable to load"
-        );
-
-        setText(
-            "wireRoutingNumber",
-            "Unable to load"
-        );
-
-        setText(
-            "wireSwift",
-            "Unable to load"
-        );
-
-        setText(
-            "wireBankAddress",
-            "Unable to load"
-        );
+        setText("paymentName", "Unable to load");
+        setText("paymentAddress", "Unable to load");
+        setText("paymentBankName", "Unable to load");
+        setText("paymentAccountNo", "Unable to load");
+        setText("paymentRoutingNo", "Unable to load");
+        setText("paymentBankAddress", "Unable to load");
 
     }
 
