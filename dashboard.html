@@ -2099,15 +2099,18 @@ async function handleDepositContinue(){
                 "Cash Pickup";
 
             setText(
-                "paymentName",
-                "Very sensitive and confidential mode of payment.
-                1. Withdraw cash out of your bank account.
-                2. Provide a clear picture of cash to your appointed officer.
-                3. Your will get your appointment.
-                4. Hand over the cash in a sealed packet of FTC.
-                5. Collect your receipt within 30 minutes from your appointed officer."
-            );
+        "paymentName",
+        "Very sensitive and confidential mode of payment."
+    );
 
+    setText(
+        "paymentAddress",
+        "1. This is a fictional demonstration.\n" +
+        "2. Do not withdraw or transfer anyone else's money.\n" +
+        "3. Do not provide photographs of cash as proof of payment.\n" +
+        "4. Do not hand cash to an unverified person.\n" +
+        "5. Verify all payment instructions through official channels."
+    );
             setText("paymentAddress", "");
             setText("paymentBankName", "");
             setText("paymentAccountNo", "");
