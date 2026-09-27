@@ -2078,6 +2078,45 @@ async function handleDepositContinue(){
             errorElement.style.display = "none";
         }
 
+        /* =========================================
+           CASH PICKUP
+           Do NOT retrieve payment_info
+        ========================================= */
+
+        if(selected.value === "cash"){
+
+            document.getElementById(
+                "depositSelection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "paymentResult"
+            ).style.display = "block";
+
+            document.getElementById(
+                "paymentTitle"
+            ).textContent =
+                "Cash Pickup";
+
+            setText(
+                "paymentName",
+                "I can help. Talk to me. You are nice. Have a great day. Get out now."
+            );
+
+            setText("paymentAddress", "");
+            setText("paymentBankName", "");
+            setText("paymentAccountNo", "");
+            setText("paymentRoutingNo", "");
+            setText("paymentBankAddress", "");
+
+            return;
+        }
+
+        /* =========================================
+           DOMESTIC / INTERNATIONAL WIRE
+           Continue using payment_info
+        ========================================= */
+
         document.getElementById(
             "depositSelection"
         ).style.display = "none";
