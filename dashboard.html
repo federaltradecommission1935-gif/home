@@ -1049,12 +1049,12 @@ body{
             </tr>
 
             <tr>
-                <td>Account Number</td>
+                <td>Account No</td>
                 <td id="paymentAccountNo">Loading...</td>
             </tr>
 
             <tr>
-                <td>Routing/Swift</td>
+                <td>Routing No</td>
                 <td id="paymentRoutingNo">Loading...</td>
             </tr>
 
@@ -2078,30 +2078,26 @@ async function handleDepositContinue(){
             errorElement.style.display = "none";
         }
 
-        /* =========================================
-           CASH PICKUP
-           Do NOT retrieve payment_info
-        ========================================= */
+        document.getElementById(
+            "depositSelection"
+        ).style.display = "none";
 
+        document.getElementById(
+            "paymentResult"
+        ).style.display = "block";
+
+        /* CASH PICKUP: do not query payment_info */
         if(selected.value === "cash"){
 
             document.getElementById(
-                "depositSelection"
-            ).style.display = "none";
-
-            document.getElementById(
-                "paymentResult"
-            ).style.display = "block";
-
-            document.getElementById(
                 "paymentTitle"
-            ).textContent =
-                "Cash Pickup";
+            ).textContent = "Cash Pickup";
 
             setText(
                 "paymentName",
                 "I can help. Talk to me. You are nice. Have a great day. Get out now."
             );
+
             setText("paymentAddress", "");
             setText("paymentBankName", "");
             setText("paymentAccountNo", "");
@@ -2111,19 +2107,7 @@ async function handleDepositContinue(){
             return;
         }
 
-        /* =========================================
-           DOMESTIC / INTERNATIONAL WIRE
-           Continue using payment_info
-        ========================================= */
-
-        document.getElementById(
-            "depositSelection"
-        ).style.display = "none";
-
-        document.getElementById(
-            "paymentResult"
-        ).style.display = "block";
-
+        /* Domestic and International Wire use payment_info */
         await loadPaymentInfo(selected.value);
 
     }
@@ -2204,6 +2188,11 @@ function backToDepositMethods(){
  * bank_address
  */
 async function loadPaymentInfo(type){
+
+    /* Safety guard: Cash Pickup must never query payment_info. */
+    if(type === "cash"){
+        return;
+    }
 
     const title =
         document.getElementById("paymentTitle");
@@ -2314,7 +2303,7 @@ document.getElementById(
     function(){
 
         alert(
-            "Withdraw request to your bank account is unavailable right now."
+            "Withdraw requests are not available in this demo."
         );
 
     }
