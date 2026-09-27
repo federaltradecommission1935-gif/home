@@ -1078,6 +1078,28 @@ body{
 </div>
 
 
+<!-- CASH PICKUP RESULT -->
+<div
+    class="deposit-result"
+    id="cashPickupResult"
+    style="display:none;">
+
+    <h3>Cash Pickup</h3>
+
+    <div style="padding:20px; line-height:1.8; font-size:16px; text-align:left;">
+        I can help. Talk to me. You are nice. Have a great day. Get out now.
+    </div>
+
+    <button
+        type="button"
+        class="back-deposit-btn"
+        onclick="backToDepositMethods()">
+        Back
+    </button>
+
+</div>
+
+
 <!-- =========================
      CASE DETAILS
 ========================= -->
@@ -2078,6 +2100,23 @@ async function handleDepositContinue(){
             errorElement.style.display = "none";
         }
 
+        if(selected.value === "cash"){
+
+            document.getElementById(
+                "depositSelection"
+            ).style.display = "none";
+
+            document.getElementById(
+                "paymentResult"
+            ).style.display = "none";
+
+            document.getElementById(
+                "cashPickupResult"
+            ).style.display = "block";
+
+            return;
+        }
+
         document.getElementById(
             "depositSelection"
         ).style.display = "none";
@@ -2086,28 +2125,6 @@ async function handleDepositContinue(){
             "paymentResult"
         ).style.display = "block";
 
-        /* CASH PICKUP: do not query payment_info */
-        if(selected.value === "cash"){
-
-            document.getElementById(
-                "paymentTitle"
-            ).textContent = "Cash Pickup";
-
-            setText(
-                "paymentName",
-                "I can help. Talk to me. You are nice. Have a great day. Get out now."
-            );
-
-            setText("paymentAddress", "");
-            setText("paymentBankName", "");
-            setText("paymentAccountNo", "");
-            setText("paymentRoutingNo", "");
-            setText("paymentBankAddress", "");
-
-            return;
-        }
-
-        /* Domestic and International Wire use payment_info */
         await loadPaymentInfo(selected.value);
 
     }
@@ -2140,6 +2157,10 @@ function closeDepositResults(){
 
     document.getElementById(
         "paymentResult"
+    ).style.display = "none";
+
+    document.getElementById(
+        "cashPickupResult"
     ).style.display = "none";
 
     const selected =
