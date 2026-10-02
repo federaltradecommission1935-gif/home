@@ -343,6 +343,18 @@ const DEMO_PASSWORD = "Ftc@2026";
 
 /*
 ==================================================
+HARD-CODED DEMO OTP
+==================================================
+
+The account will only be created when
+the entered OTP matches this value.
+*/
+
+const DEMO_OTP = "847880";
+
+
+/*
+==================================================
 CREATE ACCOUNT
 ==================================================
 */
@@ -367,7 +379,7 @@ document
             message.style.color = "#004080";
 
             message.textContent =
-                "Creating your account...";
+                "Verifying OTP...";
 
 
             button.disabled = true;
@@ -420,6 +432,68 @@ document
                     document
                         .getElementById("accountType")
                         .value;
+
+
+                /*
+                ------------------------------------------
+                OTP VERIFICATION
+                ------------------------------------------
+                */
+
+                const enteredOTP =
+                    window.prompt(
+                        "Enter OTP to create your account:"
+                    );
+
+
+                /*
+                User clicked Cancel
+                */
+
+                if(enteredOTP === null){
+
+                    message.style.color = "#cc0000";
+
+                    message.textContent =
+                        "Account creation cancelled.";
+
+                    button.disabled = false;
+
+                    return;
+
+                }
+
+
+                /*
+                Check OTP
+                */
+
+                if(
+                    enteredOTP.trim() !== DEMO_OTP
+                ){
+
+                    message.style.color = "#cc0000";
+
+                    message.textContent =
+                        "Incorrect OTP. Account was not created.";
+
+                    button.disabled = false;
+
+                    return;
+
+                }
+
+
+                /*
+                ------------------------------------------
+                OTP CORRECT
+                ------------------------------------------
+                */
+
+                message.style.color = "#004080";
+
+                message.textContent =
+                    "OTP verified. Creating your account...";
 
 
                 /*
@@ -523,7 +597,6 @@ document
                 Do not create username.
                 Do not create account number.
                 */
-
 
                 button.disabled = true;
 
